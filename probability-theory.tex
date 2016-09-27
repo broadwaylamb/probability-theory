@@ -1,0 +1,560 @@
+\documentclass[11pt,openany,a4paper]{scrartcl}
+
+\usepackage{indentfirst}
+\usepackage{amsmath,amsthm,amssymb,amsfonts,amsopn}
+\usepackage{mathtext}
+\usepackage{enumitem}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[intlimits]{mathtools}
+\usepackage[makeroom]{cancel}
+\usepackage{titletoc}
+\renewcommand{\bfdefault}{sbc}
+\usepackage{ccfonts,eulervm,microtype}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\tikzset{
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt},
+    axis/.style={very thick, ->, >=stealth'},
+}
+
+\usepackage[portrait,a4paper,margin=2.5cm,headsep=5mm]{geometry}
+
+\author{С. М. Ананьевский \thanks{Конспект подготовлен студентом Яскевичем С. В.}}
+\title{Теория вероятностей и математическая статистика}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{corollary}[theorem]{Следствие}
+\newtheorem{proposition}[theorem]{Предложение}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{exercise}[theorem]{Упражнение}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Определение}
+\newtheorem{remark}[theorem]{Замечание}
+\newtheorem{example}[theorem]{Пример}
+\newtheorem{examples}[theorem]{Примеры}
+\newtheorem{num}[theorem]{}
+
+\newcommand\mb{\mathbb}
+\newcommand\real{\mb R}
+\newcommand{\complex}{\mb C}
+\newcommand\eqdef{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+\newcommand\lparagraph[1]{\paragraph{#1}\mbox{}\\}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\uto}{\rightrightarrows}
+\newcommand{\underto}[1]{\xrightarrow[#1]{}}
+\newcommand{\dif}{\, \mathrm d}
+\DeclareMathOperator{\Ree}{Re}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\const}{const}
+\DeclareMathOperator{\Ln}{Ln}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{Условные вероятности}
+
+Пусть у нас есть вероятностное пространство $(\Omega, \mathfrak{F}, P)$ и два случайных 
+события $A,B \in \mathfrak{F}$, причём будем считать, что $P(B) \neq 0$.
+
+\begin{definition}
+    \emph{Условной вероятностью события $A$ при условии события $B$} называется число
+    $P(A/B) = \frac{P(A \cap B)}{P(B)}$ (иногда обозначается $P_B(A)$).
+\end{definition}
+\begin{example}
+    Если у нас есть игральный кубик, то вероятность выпадения нечётной грани при 
+    условии, что количество очков не превосходит $3$, равна
+\end{example}
+
+\begin{theorem}[Свойства условной вероятности]
+    Условная вероятность является вероятностью.
+\end{theorem}
+\begin{proof}
+    Проверим аксиомы вероятности:
+    \begin{enumerate}
+        \item $P_B(A) =  \frac{P(A \cap B)}{P(B)}$. Так как числитель и знаменатель 
+        неотрицательны, то и дробь не отрицательна.
+        \item $P_B(\Omega) = \frac{P(\Omega \cap B)}{P(B)} =  \frac{P(B)}{P(B)} = 1$
+        \item Пусть $A_1, A_2 \ldots, \in \mathfrak{F}$;
+        $A_i \cap A_j = \varnothing$ (при $i \neq j$). Тогда:
+        $$
+        P_B(\bigcup\limits_i A_i) =
+        \frac{P(\bigcup\limits_i B\cap A_i)}{P(B)} =
+        \frac{\sum\limits_i P(B \cap A_i)}{P(B)} =
+        $$
+        $$
+        = \sum\limits_i \frac{P(B\cap A_i)}{P(B)} = \sum\limits_i P_B(A_i)
+        $$
+        
+    \end{enumerate}
+\end{proof}
+\begin{corollary}
+    Все свойства вероятности для условной вероятности выполнены.
+\end{corollary}
+
+\section{Формула полной вероятности. Формула Байеса}
+\begin{definition}
+    Пусть $A_1, A_2 \ldots, \in \mathfrak{F}$; $A_i \cap A_j = \varnothing$
+    (при $i \neq j$), $\bigcup\limits_i A_i = \Omega$. Тогда $A_1, A_2 \ldots$ — полная
+    система событий.
+\end{definition}
+\begin{theorem}[Формула полной вероятности]
+    Пусть $A_1, A_2 \ldots$ — полная система событий и $\forall i$ $P(A_i) > 0$. Тогда
+    вероятность любого случайного события $B \in \mathfrak{F}$ можно вычислить
+    по формуле:
+    $$
+    P(B) = \sum_i P(B/A_i) \cdot P(A_i)
+    $$
+\end{theorem}
+\begin{proof}
+    $$
+    P(B) = P(B \cap \Omega) = P(B \cap (\bigcup_i A_i)) = P(\bigcup_i (B \cap A_i)) =
+    \sum_i P(B \cap A_i) = \sum_i\frac{P(B \cap A_i) \cdot P(A_i)}{P(A_i)} =
+    $$
+    $$
+    = \sum_i P(B/A_i) \cdot P(A_i)
+    $$
+\end{proof}
+
+\begin{theorem}[Байеса]
+    Пусть $A_1, A_2 \ldots$ — полная система событий, $\forall i$ $P(A_i) > 0$, 
+    $P(B) > 0$. Тогда $\forall k \geqslant 1$ $P(A_k/B) =
+    \frac{P(B/A_k) \cdot P(A_k)}{\sum\limits_i P(B/A_i) \cdot P(A_i)}$
+\end{theorem}
+\begin{proof}
+    Правая часть равна:
+    $$
+    \frac{P(B/A_k) \cdot P(A_k)}{P(B)} =
+    \frac{P(B \cap A_k) \cdot P(A_k)}{P(A_k) \cdot P(B)} =
+    \frac{P(B \cap A_k)}{P(B)} = P(A_k/B)
+    $$
+\end{proof}
+\begin{examples}
+    \begin{enumerate}
+        \item Пусть с завода №1 поставлено 5 ящиков деталей, с завода №2 — 3 ящика,
+        а с завода №3 — 2 ящика. Предположим также, что завод №1 допускает 2\% брака,
+        завод №2 — 5\% брака, а завод №3 — 10\%. Какова вероятность выбрать хорошую
+        деталь? Какова вероятность того, что деталь изготовлена на заводе №1 при
+        условии, что она хорошая?
+        
+        Ящики считаем одинаковыми. Рассмотрим события $C_1, C_2, C_3$, где $C_i$
+        означает выбрать ящик с завода №i, и событие $B$, означающее выбор хорошей 
+        детали. Ясно, что $C1, C_2, C_3$ — полная система событий. Чтобы вычислить 
+        вероятность события $B$, можно воспользоваться формулой полной вероятности:
+        $$
+        P(B) = \sum_{i = 1}^3 P(B/C_i) \cdot P(C_i) = 
+        0.98 \cdot 0.5 + 0.95 \cdot 0.3 + 0.9 \cdot 0.2
+        $$
+        
+        Чтобы ответить на второй вопрос, мы можем воспользоваться формулой Байеса:
+        $$
+        P(C_1/B) = \frac{0.98 \cdot 0.5}
+        {0.98 \cdot 0.5 + 0.95 \cdot 0.3 + 0.9 \cdot 0.2}
+        $$
+        
+        \item Представим, что у нас имеется ящик с шестью белыми и четырьмя чёрными 
+        шариками. Сначала мы потеряли один шарик из этого ящика (какой — неизвестно),
+        а затем из оставшихся мы вытащили два шарика. Какова вероятность вытащить
+        два белых шарика? Какова вероятность того, что был потерян чёрный шар, при
+        условии, что мы вытащили два белых шара?
+        
+        Введём два события, описывающие первый этап эксперимента: $C_б, C_ч$ — потеря
+        белого и чёрного шаров соответственно. $C_б, C_ч$ — полная система событий.
+        Пусть $B$ означает "вытащить два белых шарика".
+        $$
+        P(B) = P(B/C_б) \cdot P(C_б) + P(B/C_ч) \cdot P(C_ч) =
+        \frac{C_5^2}{C_9^2} \cdot \frac{6}{10} + \frac{C_6^2}{C_9^2} \cdot \frac{4}{10}
+        $$
+        $$
+        P(C_ч/B) = \frac{C_6^2 \cdot 4}{C_5^2 \cdot 6 + C_6^2 \cdot 4}
+        $$
+    \end{enumerate}
+\end{examples}
+
+\section{Независимые события. Пример Бернштейна}
+
+Важно: нельзя путать понятия \emph{независимости} событий и \emph{несовместности}.
+
+Пусть имеется эксперимент, описываемый с помощью вероятностного пространства
+$(\Omega, \mathfrak{F}, P)$, и даны случайные события $A, B \in \mathfrak{F}$.
+
+Независимость событий можно было бы рассматривать как выполнение равенств
+$$
+P(A/B) = P(A/\overline{B}) = P(A).
+$$
+Однако здесь нарушена симметрия - логично, что если событие $A$ независимо от $B$, то
+и обратное тоже верно — $B$ независимо от $A$.
+
+\begin{definition}
+    $A$ и $B$ независимы, если $P(A\cap B) = P(A)P(B)$.
+\end{definition}
+
+Таким образом, если $P(B) > 0$, то независимость $A$ и $B$ равносильна
+$P(A/B) = P(A)$.
+\begin{proposition}[Свойства независимых событий]
+    \begin{enumerate}
+        \item $A$, $B$ независимы $\iff$ $A$, $\overline{B}$ независимы
+        $\iff$ $\overline{A}$, $B$ независимы $\iff$ $\overline{A}$, $\overline{B}$ 
+        независимы.
+        \item $\forall A \in \mathfrak{F}$ $A$ и $\Omega$ независимы.
+        \item $\forall A \in \mathfrak{F}$ $A$ и $\varnothing$ независимы.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $$
+    P(A) = P(A\cap \Omega) = P(A \cap (B \cup \overline{B})) =
+    P((A \cap B) \cup (A \cap \overline{B}))
+    $$
+    $$
+    P(A)(1 - P(B)) = P(A)P(B) = P(A \cap \overline{B})
+    $$
+\end{proof}
+\begin{exercise}
+    Пусть $A$ и $B$ независимы, $A$ и $C$ независимы. Верно ли, что $A$ и $B \cup C$
+    независимы? Верно ли, что $A$ и $B \cap C$ независимы?
+\end{exercise}
+
+Можем ли мы определить понятие независимости для числа событий, большего $2$?
+Для событий $A_1, A_2, \ldots, A_n$ мы можем выделить попарную независимость:
+$$
+\forall i\neq j\quad A_i, A_j \text{ независимы.}
+$$
+Или же независимость в совокупности (совместную): $A_1, \ldots, A_n$ независимы в
+совокупности, если:
+\begin{enumerate}
+    \item $\forall i\neq j$ $A_i, A_j$ — независимы;
+    \item $\forall i_1<i_2<i_3s$ $P(\bigcap_{j=1}^3 A_{ij}) = \prod_{j=1}^3P(A_{ij})$
+    \item $P(\bigcap_{j=1}^n A_{ij}) = \prod_{j=1}^n P(A_{ij})$ и так далее.
+\end{enumerate}
+Это равносильно:
+$$
+\forall 2 \leqslant k \leqslant n \quad \forall i_1 < i_2 < \ldots < i_k\quad
+P(\bigcap_{j=1}^k A_{ij}) = \prod_{j=1}^k P(A_{ij})
+$$
+
+\begin{example}[Берштейна]
+    Рассмотрим эксперимент: будем подбрасывать тетраэдр с белой, синей, красной и 
+    разноцветной (бело-сине-красной) гранями. Введём три события:
+    $$Б = \{\text{внизу присутствует белый цвет}\}$$
+    $$С = \{\text{внизу присутствует синий цвет}\}$$
+    $$К = \{\text{внизу присутствует красный цвет}\}$$
+    Проверим, что эти события попарно независимы. Верно ли, что
+    $P(Б \cap С) = P(Б)P(С)$? Очевидно, что да. Значит, попарная независимость есть.
+    Проверим теперь совместную независимость:
+    $$
+    P(Б\cap С\cap К) = \frac{1}{4} \neq \frac{1}{2} \cdot\frac{1}{2} \cdot\frac{1}{2} =
+    P(Б)P(С)P(К)
+    $$
+    Это доказывает, что попарная независимость и совместная независимость 
+    неравносильны.
+\end{example}
+
+\section{Независимые испытания Бернулли. Формулы Бернулли}
+
+Пусть у нас есть вероятностное пространство $(\Omega, \mathfrak{F}, P)$.
+Рассмотрим набор случайных событий $\mathfrak A = (A_1, \ldots, A_n)$,
+причём $A_1, \ldots, A_n$ — полная системы событий. Определим \emph{испытание}
+$A_1, \ldots, A_m$ как 
+набор событий, являющийся полной системой событий.
+
+\begin{definition}
+    Испытания $A_1, \ldots, A_m$ будем называть \emph{независимыми}, если для любого
+    набора $A_{1i_1}, A_{2i_2} \ldots, A_{mi_m}$ составляющие его события являются
+    совместно независимыми.
+\end{definition}
+
+\begin{example}
+    Представим, что мы одновременно подбрасываем монетку и кубик. Каким будет 
+    вероятностное пространство? $\Omega = \{О1, О2, \ldots, О6, Р1, \ldots, Р6\}$
+    Зададим испытании $A_1 = \{A_{11}, A_{12}\}$, где
+    $A_{11} = \{\text{на монете О}\}$,
+    $A_{12} = \{\text{на монете Р}\}$;
+    $A_2 = \{A_{21},\ldots,A_{26}\}$, где $A_{2i}=\{\text{на кубике цифра } i\}$.
+    $$
+    P(A_{11}\cap P(A_{23}) = \frac{1}{12},\quad P(A_{11})=\frac{1}{2}\quad
+    P(A_{23})=\frac{1}{2}
+    $$
+\end{example}
+
+Испытаниями Бернулли называются набор из $n$ независимых испытаний с двумя
+исходами в каждом из 
+них, условно называемыми успехом и неудачей, и с постоянной вероятностью успеха во всех 
+испытаниях. Будем обозначать такой набор $(У_1, У_2, Н_3, \ldots, У_n$, а вероятность
+успеха $P(У_k)=p$.
+
+Пусть
+$A = \{\text{в } n \text{ испытаниях Бернулли успех произошёл ровно }
+k \text{ раз}\}$. Какова вероятность $A$?
+Заметим, что $A =(\underbrace{УУ\ldots У}_{k} \underbrace{НН\ldotsН}_{n-k}) \cup
+(\underbrace{УУ\ldots УУ}_{k-1}НУНН\ldots Н) \cup \ldots$.
+$$
+P(УУ\ldots УНН\ldots Н) = P(У_1 \cap У_2 \cap \ldots \cap У_k \cap Н_{k+1} \cap
+\ldots \cap Н_n) = p^k(1-p)^{n-k}
+$$
+Ясно, что вероятность любой цепочки, содержащей $k$ успехов и $n-k$ неудач,
+равна $p^k(1-p)^{n-k}$
+
+Получаем, что в нашем примере $P(A) = C_n^k p^k(1-p)^{n-k} = P_n(k)$ — эта формула
+носит имя Бернулли.
+
+\begin{corollary}
+\begin{enumerate}
+    \item $P_n(n)=p^n$
+    \item $P_n(0) = (1 - p)^n$
+    \item $P_n(\text{хотя бы один успех}) = 1 - P_n(0) = 1 - (1-p)^n$
+\end{enumerate}
+\end{corollary}
+
+\begin{example}
+    Пусть мы подбрасываем монету 10 раз. Какова вероятность того, что все десять раз
+    выпал орёл? По формуле Бернулли:
+    $$
+    P_{10}(10) = (\frac{1}{2})^{10} = \frac{1}{1024}
+    $$
+    А вероятность того, что орёл выпал ровно пять раз, равна
+    $$
+    P_{10}(5) = C_{10}^5 (\frac{1}{2})^5 (\frac{1}{2})^5 = \frac{252}{1024}
+    $$
+    Возникает вопрос, каково наиболее вероятное число выпадений орла?
+    $P_{10}(k) = C_{10}^k (\frak{1}{2})^{10}$, и ясно, что максимум достигается при
+    $k=5$
+\end{example}
+
+Обобщим последний вопрос примера.
+Пусть имеется $n$ испытаний Бернулли. Вероятность успеха в каждом испытании равна $p$.
+Чему равно наиболее вероятное число появления успехов?
+
+Рассмотрим неравенство: 
+$$
+P_n(k) < P_n(k+1)
+$$
+Его можно переписать:
+$$
+C_n^k p^k(1-p)^{n-k} < C_n^{+1-1} p^{k+1} (1-p)^{n-k-1}
+$$
+$$
+\frac{n!}{k! (n-k)!} p^k (1-p)^{n-k} < \frac{n!}{(k+1)!(n-k-1)!} p^{k+1}(1-p)^{n-k-1}
+$$
+Полученное равносильно:
+$$
+(k+1)(1-p) < p(n-k)
+$$
+$$
+k < (n+1)p - 1
+$$
+
+Если мы теперь посмотрим на обратное неравенство $P_n(k) > P_n(k+1)$, то увидим, что
+оно равносильно $k > (n+1)p - 1$.
+
+Рассмотрим два случая:
+\begin{enumerate}
+    \item $(n+1)p \notin \mb Z$. Обозначим за $k_n^\ast$ наиболее вероятное число
+    успехов в $n$ испытаниях. Тогда $k_n^\ast=[(n+1)p]$
+    \item $(n+1)p \in \mb Z$. В этому случае $k_n^{\ast_1} = (n+1)p - 1$ и
+    $k_n^{\ast_2} = (n+1)p$ — наиболее вероятные числа успехов.
+\end{enumerate}
+
+\begin{example}
+    Пусть $p = \frac{1}{2}$, $n = 10$. Тогда $k_{10}^\ast = 5$. Если же $n = 11$, то
+    $k_{11}^{\ast_1} = 5$ и $k_{11}^{\ast_2} = 6$, так как $C_{11}^5 = C_{11}^6$.
+\end{example}
+
+\section{Предельные теоремы в схеме испытаний Бернулли}
+
+Представим, что мы подбрасываем монету 10000 раз. Ясно, что наиболее вероятное число 
+выпадений орла равна 5000. Чему же равна вероятность такого исхода?
+
+$P_{10000}(5000) = C_{10000}^{5000}(\frac{1}{2})^{10000}$. Мы хотели бы оценить это 
+число.
+
+Рассмотрим функции:
+$$
+\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}},
+\quad \Phi(x) = \int\limits_{-\infty}^x \varphi(t)\mathrm dt
+$$
+
+Ясно, что $\varphi(x)$ — чётная, а $\Phi(-x) = 1 -\Phi(x)$.
+
+Пусть $n$ — число испытаний, $k$ — число успехов, $p$ — вероятность успеха, $q=1-p$.
+Введём обозначение: $x_{n,k} = \frac{k - np}{\sqrt{npq}}$.
+
+\begin{theorem}[Локальная теорема Муавра-Лапласа]
+    Справедливо следующее соотношение:
+    $$
+    \frac{P_n(k)}{\frac{1}{\sqrt{npq}}\cdot \frac{1}{\sqrt{2\pi}}\cdot
+    e^{-\frac{x_{n,k}^2}{2}}} \underto{n \to \infty} 1\quad \text{равномерно по всем } k:\quad
+    |x_{n,k}|\leqslant Cn^{\frac{1}{6}-\varepsilon}\quad \forall C>0,\, \varepsilon > 0
+    $$
+    
+    Таким образом, $P_n(k) \approx \frac{1}{\sqrt{npq}}\varphi(x_{n,k})$.
+\end{theorem}
+\begin{lemma}[Формула Стирлинга]
+    $$
+    n! = n^n e^{-n} \sqrt{2\pi n}\cdot(1 + o(1))\, (n \to \infty)
+    $$
+\end{lemma}
+\begin{lemma}\label{laplacetheoremlemma2}
+    $$
+    \ln(1+x) = x - \frac{x^2}{2} + \theta x^3,\text{, где } |\theta| \leqslant 3
+    \quad\forall |x| < \frac{1}{2}
+    $$
+\end{lemma}
+\begin{proof}[Доказательство теоремы]
+    По формуле Бернулли:
+    $$
+    P_n(k) = \frac{n!}{k!(n-k)!}p^k q^{n-k} =
+    \frac{n^n e^{-n}\sqrt{2\pi n} (1 + o(1))}{k^k e^{-k} \sqrt{2\pi k} (1 + o(1))
+    (n-k)^{n-k} e^{-n+k}\sqrt{2\pi (n-k)}(1 + o(1))}
+    $$
+    Но это верно при $b \to \infty$, $k \to \infty$, $n-k \to \infty$.
+    $$
+    k = np + x_{n,k}\sqrt{npq} \underto{n \to \infty} \infty
+    $$
+    $$
+    n-k = nq - x_{n,k}\sqrt{npq} \underto{n \to \infty} \infty
+    $$
+    Продолжая вычисления:
+    $$
+    P_n(k) = (\frac{k}{np})^{-k-\frac{1}{2}}(\frac{n-k}{nq})^{-n+k-\frac{1}{2}}
+    \frac{1}{\sqrt{npq}}\frac{1}{\sqrt{2\pi}}(1 + o(1))
+    $$
+    Пусть $\sqrt{npq}P_n(k) = T_{n,k}$. Тогда:
+    $$
+    T_{n,k} = (\frac{k}{np})^{-k-\frac{1}{2}}(\frac{n-k}{nq})^{-n+k-\frac{1}{2}}
+    \frac{1}{\sqrt{2\pi}}(1 + o(1))
+    $$
+    $$
+    \ln T_{n,k} = (-k - \frac{1}{2})\ln \frac{k}{np} + (-n+k-\frac{1}{2})
+    \ln \frac{n-k}{nq} = \ln \frac{1}{\sqrt{2\pi}} + o(1)
+    $$
+    С учётом
+    $$
+    \frac{k}{np} = 1 + x\sqrt{\frac{q}{np}}
+    $$
+    $$
+    \frac{n-k}{nq} = 1 - x\sqrt{\frac{p}{nq}}
+    $$
+    Применив лемму \ref{laplacetheoremlemma2}, получим:
+    $$
+    \ln T_{n,k} = (-np - x\sqrt{npq} - \frac{1}{2})(x\sqrt{\frac{q}{np}} -
+    \frac{x^2}{2}\frac{q}{np} + \theta_1 \frac{x^3 q\sqrt{q}}{np\sqrt{np}}) +
+    $$
+    $$
+    + (-np + x\sqrt{npq} - \frac{1}{2})(-x\sqrt{\frac{p}{nq}} -
+    \frac{x^2p}{2nq} + \theta_2x^3\frac{p}{nq}\frac{\sqrt{p}}{\sqrt{nq}}) +
+    \ln \frac{1}{\sqrt{2\pi}} + o(1) =
+    $$
+    $$
+    = -x\sqrt{npq} + \frac{x^2}{2}q + o(1) - x^2q + x\sqrt{npq} + \frac{x^2}{2}p
+    - x^2p + \ln \frac{1}{\sqrt{2\pi}} =
+    $$
+    $$
+    =-\frac{x^2}{2} + \ln \frac{1}{\sqrt{2\pi}} + o(1) 
+    $$
+    Тогда само $T_{n,k}$ равно:
+    $$
+    T_{n,k} = e^{-\frac{x^2}{2}} \frac{1}{\sqrt{2\pi}} e^{o(1)}
+    $$
+    Отсюда:
+    $$
+    P_n(k) = \frac{1}{\sqrt{npq}}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2_{n,k}}{2}}
+    e^{o(1)}
+    $$
+    Теорема доказана.
+\end{proof}
+
+Попробуем ответить на вопрос: как найти $P_n(a < \text{число успехов} < b)$
+при $a<b$ и больших $n$? Применение локальной теоремы Муавра-Лапласа может давать
+слишком высокие погрешности, поэтому необходимо использовать иное решение.
+\begin{theorem}[Интегральная теорема Муавра-Лапласа]
+    Пусть $p$ — вероятность успеха, $0 < p < 1$. Тогда:
+    $$
+    \sup_{a<b} \Bigg| P_n(a < \text{число успехов} < b) -
+    \int\limits_{\frac{a - np}{\sqrt{npq}}}^{\frac{b-np}{\sqrt{npq}}}
+    \varphi(t) \dif t \Bigg| \underto{n \to \infty} 0
+    $$
+\end{theorem}
+
+Мы докажем эту теорему позже — как частный случай более общей теоремы.
+
+\begin{corollary}
+    $$
+    \int\limits_{-\infty}^{+\infty}
+    \frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}\dif t = 1
+    $$
+\end{corollary}
+\begin{proof}
+    Примем $a = -\infty$, $b = +\infty$.
+\end{proof}
+
+Если мы возьмём функцию $\Phi(x) = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^x
+e^{-\frac{t^2}{2}}\dif t$,
+то теорему можно сформулировать так:
+$$
+P_n(a < \text{число успехов} < b) \approx
+\Phi\bigg(\frac{b-np}{\sqrt{npq}}\bigg) -
+\Phi\bigg(\frac{a - np}{\sqrt{npq}}\bigg)
+$$
+
+\begin{example}
+    Подсчитаем вероятность того, что при подбрасывании монетки 10000 раз <<орёл>>
+    выпадет 5000 раз. Для этого применим локальную теорему Муавра-Лапласа.
+    $$
+    P_{10000}(5000) \approx
+    \frac{1}{\sqrt{10000 \cdot \frac{1}{2} \cdot \frac{1}{2}}}\varphi(0) =
+    \frac{1}{50} \cdot 0.39894
+    $$
+    Если мы захотим подсчитать вероятность того, что <<орёл>> выпадет как минимум 
+    4900 раз и как максимум 5100, то необходимо будет применить интегральную
+    теорему:
+    $$
+    P_{10000}(4900 < \text{число успехов} < 5100) \approx \ldots
+    $$
+\end{example}
+
+\begin{theorem}[Пуассона]
+    Будем рассматривать схему серий испытаний Бернулли. Допустим, первая серия 
+    состоит из одного испытания такого, что $p_1 = P_1(У)$. Вторая серия
+    состоит из двух испытаний и $p_2 = P_1(У)$.
+    $n$-я серия испытаний состоит из $n$ испытаний и $p_n = P_1(У)$.
+    (Здесь $P_1(У)$ — вероятность успеха в одном испытании для каждой серии 
+    соответственно.)
+    Пусть также $np_n = \lambda > 0$. Тогда:
+    $$
+    P_n(k) \underto{n \to \infty} \frac{\lambda^k}{k!}e^{-\lambda}
+    $$
+\end{theorem}
+\begin{proof}
+    $$
+    P_n(k) = C_n^k p_n^k(1 - p_n)^{n-k} = \frac{n!}{k!(n-k)!}p_n^k(1-p_n)^{n-k} =
+    $$
+    $$
+    = \frac{1}{k!} \frac{n(n-1)\ldots(n-k+1)}{n^k} n^k
+    p_n^k(1-p_n)^n(1-p_n)^{-k} =
+    $$
+    $$
+    = \frac{\lambda^k}{k!}
+    \underbrace{(1 - \frac{1}{n})\ldots(1 - \frac{k-1}{n})}_{\to 1} \cdot
+    \underbrace{(1 - \frac{\lambda}{n})^n}_{\to e^{-\lambda}}\cdot
+    \underbrace{(1 - \frac{\lambda}{n})^{-k}}_{\to 1}    
+    $$
+\end{proof}
+
+\end{document}
