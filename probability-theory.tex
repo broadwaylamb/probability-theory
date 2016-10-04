@@ -54,6 +54,8 @@
 \newcommand{\uto}{\rightrightarrows}
 \newcommand{\underto}[1]{\xrightarrow[#1]{}}
 \newcommand{\dif}{\, \mathrm d}
+\newcommand{\distr}{\mathfrak P_\xi}
+\newcommand{\funcdistr}{F_\xi}
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Arg}{Arg}
@@ -556,5 +558,180 @@ $$
     \underbrace{(1 - \frac{\lambda}{n})^{-k}}_{\to 1}    
     $$
 \end{proof}
+
+\begin{theorem}[Закон больших чисел Бернулли]
+    $$
+    \forall \varepsilon > 0\quad P_n\bigg(\bigg|\frac{k_n}{n} -
+    p\bigg| > \varepsilon\bigg)
+    \underto{n \to \infty} 0
+    $$
+    Здесь $\frac{k_n}{n}$ называется частотой успеха.
+\end{theorem}
+\begin{proof}
+    Рассмотрим вероятность:
+    $$
+    P_n\big(\big|\frac{k_n}{n} -
+    p\big| > \varepsilon\big) = 1 - P_n(\big|\frac{k_n}{n} -
+    p\big| \leqslant \varepsilon\big) =
+    \frac{1}{\sqrt{2\pi}}
+    \int\limits_{-\infty}^{+\infty}e^{-\frac{t^2}{2}} \dif t -
+    P_n(np - n\varepsilon \leqslant k_n \leqslant n\varepsilon + np) =
+    $$
+    = $$
+    \frac{1}{\sqrt{2\pi}}
+    \int\limits_{|t|\leqslant \varepsilon \sqrt{\frac{n}{pq}}}
+    e^{-\frac{t^2}{2}} \dif t + \frac{1}{\sqrt{2\pi}}
+    \int\limits_{|t| > \varepsilon \sqrt{\frac{n}{pq}}}
+    e^{-\frac{t^2}{2}} \dif t -
+    P_n(np - n\varepsilon \leqslant k_n \leqslant n\varepsilon + np)
+    $$
+    Разность первого и третьего слагаемого стремится к нулю, второе слагаемое тоже
+    стремится к нулю. Теорема доказана.
+\end{proof}
+
+\section{Случайная величина. Распределение случайных величин}
+
+Будем рассматривать вероятностное пространство $(\Omega, \mathfrak{F}, P)$.
+
+\begin{definition}
+    Функция $\xi: \Omega \to \real$ такая, что
+    $\forall B \in \mathfrak B$
+    $\xi^{-1}(B) \in \mathfrak F$, называется \emph{случайной величиной}.
+    (Здесь $\mathfrak B$ обозначает борелевскую сигма-алгебру.)
+\end{definition}
+\begin{examples}
+    \begin{enumerate}
+        \item Пусть мы подбрасываем игральный кубик.
+        $\Omega = \{\omega_1,\ldots,\omega_6\}$. Пусть $\xi_1(\omega_i) = i$,
+        $\xi_2(\omega_i) =
+        \begin{cases}
+            0,\quad i \neq 6\\
+            1,\quad i = 6\\  
+        \end{cases}
+        $. $\xi_1$, $\xi_2$ — случайные величины.
+        \item Пусть $\Omega = \{x \big| x \in [0, 1]\}$,
+        $\mathfrak F = \{[0, \frac{1}{2}],
+        (\frac{1}{2}, 1], [0, 1], \varnothing\}$,
+        $\eta(x) = x$. $\eta$ не будет случайной величиной, так как
+        $\eta^{-1}([0, \frac{1}{3}]) = [0, \frac{1}{3}] \notin \mathfrak F$.
+    \end{enumerate}
+\end{examples}
+
+Рассмотрим функцию $\mathfrak P_\xi: \mathfrak B \to \real$ такую, что
+$\forall B \in \mathfrak B$ $\mathfrak P_\xi(B) = P(\xi^{-1}(B))$.
+
+\begin{definition}
+    $\mathfrak P_\xi$ называется \emph{распределением случайной величины $\xi$}.
+\end{definition}
+\begin{theorem}
+    $\mathfrak P_\xi$ является вероятностью.
+\end{theorem}
+\begin{proof}
+    Проверим аксиомы вероятности.
+    \begin{enumerate}
+        \item $\distr(B) = P(\xi^{-1}(B)) \geqslant 0$
+        \item $\distr (\real) =P(\xi^{-1}(\real)) = P(\Omega) = 1$
+        \item Пусть $B_1, B_2, \ldots \in B$, $B_i \cap B_j = \varnothing$
+        ($i \neq j$).
+        $$
+        \distr (\bigcup\limits_{i=1}^\infty B_i) =
+        P(\xi^{-1}(\bigcup\limits_{i=1}^\infty B_i) =
+        $$
+        $$
+        = P(\bigcup\limits_{i=1}^\infty \underbrace{\xi^{-1}
+        (B_i)}_{\text{попарно несовместны}}) =
+        \sum\limits_i P(\xi^{-1}(B_i)) = \sum\limits_i \distr (B_i)
+        $$
+    \end{enumerate}
+\end{proof}
+
+Теперь мы можем перейти к использованию вероятностного пространства
+$(\real, \mathfrak B, \distr)$.
+
+\begin{definition}
+    Функция $\funcdistr: \real \to \real$ такая, что
+    $\forall x\in \real$ $\funcdistr(x) = \distr((-\infty, x)) = 
+    P(\xi^{-1}((-\infty, x))) = P(\omega:\, \xi(\omega) < x) = P(\xi < x)$,
+    называется \emph{функцией распределения случайной величины $\xi$}.
+\end{definition}
+
+Рассмотрим значение $\funcdistr(b) = \distr((-\infty, b)) =
+\distr((-\infty, a) \cup [a, b)) = \distr((-\infty,a)) + \distr([a, b)) =
+\funcdistr(a) + \distr([a, b)))$. Получается, что
+$\distr([a, b)) = \funcdistr(b) - \funcdistr(a)$, то есть,
+существует взаимно-однозначное соответствие между $\distr$ и $\funcdistr$.
+
+\begin{proposition}[Свойства функции распределения]
+    \begin{enumerate}
+        \item $\forall x$ $0\leqslant \funcdistr(x) \leqslant 1$;
+        \item $\funcdistr$ неубывает;
+        \item\label{funcdistr_cont} $\funcdistr$ непрерывна слева во всех точках.
+        \item\label{funcdistr_lim} $\funcdistr(x) \underto{x \to -\infty} 0$,
+        $\funcdistr(x) \underto{x \to \infty} 1$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Докажем свойство \ref{funcdistr_cont}.
+    Пусть $x_1 < x_2 < \ldots$ и $x_n \underto{n \to \infty} x$.
+    Мы хотим доказать, что $\funcdistr(x_n) \underto{n \to \infty} \funcdistr(x)$.
+    $(-\infty, x_n) \subset (-\infty, x_{n+1})$ и $\bigcup\limits_n(-\infty, x_n)
+    = (-\infty, x)$. Отсюда, по свойству вероятности,
+    $\underbrace{\distr((-\infty, x_n))}_{\funcdistr(x_n)}
+    \underto{n \to \infty} \underbrace{\distr((-\infty, x))}_{\funcdistr(x)}$.
+    Всё доказано.
+    
+    Докажем свойство \ref{funcdistr_lim}.
+    Пусть $\forall n \geqslant 1$ $[-n, n) \subset [-(n+1), n+1)$ и
+    $\bigcup\limits_{n \geqslant 1}[-n, n) = \real$. Тогда:
+    $$
+    \underbrace{\distr([-n, n))}_{\funcdistr(n) - \funcdistr(-n)}
+    \underto{n \to \infty} \distr(\real) = 1
+    $$
+    Отсюда получаем, что $\lim\limits_{n \to \infty} \funcdistr(n) = 1$
+    и $\lim\limits_{n \to \infty} \funcdistr(-n) = 0$. Свойство \ref{funcdistr_lim}
+    доказано.
+\end{proof}
+
+Мы доказали, что функция распределения удовлетворяет указанным свойствам, однако
+верно и обратное.
+
+\begin{proposition}
+    Пусть $G: \real \to \real$ — функция, удовлетворяющая свойствам функции
+    распределения. Тогда $G$ является функцией распределения некоторой случайной 
+    величины.
+\end{proposition}
+\begin{proof}
+    Упражнение.
+\end{proof}
+
+\section{Различные типы распределений случайных величин. Случайные величины
+с дискретным распределением}
+
+\begin{definition}
+    Случайная величина $\xi$ называется случайной величиной с дискретным 
+    распределением, если существует не более чем счётное подмножество
+    вещественных чисел $A$ такое, что $P(\xi \in A) = 1$. Другими словами, у этой
+    случайной величины конечное или счётное число значений.
+\end{definition}
+
+Занумеруем все элементы множества $A$: $A = \{a_1, a_2,\ldots\}$, обозначим
+$p_i = P(\xi = a_i)$. Правило, сопоставляющее каждому значению $a_i$ случайной
+величины $\xi$ вероятность $p_i$, называется \emph{законом распределения}.
+\begin{examples}
+    \begin{enumerate}
+        \item $\xi = c$, $p = 1$ — случайная величина с вырожденной в точке
+        $c$ распределением. График функции распределения $\funcdistr(x) =
+        P(\xi < x)$ представляет собой ступенчатую функцию, принимающую
+        значение $0$ при $x \leqslant c$ и $1$ при $x > c$.
+        \item $(\xi, p): (0, 1-p), (1, p)$ — случайная величина с
+        распределением Бернулли. График — ступенчатая функция, принимающая значения
+        $1-p$ и $p$ в точках $0$ и $1$ соответственно.
+        \item $(\xi, p): (a_1, p_1), (a_2, p_2), \ldots, (a_n, p_n)$. График —
+        аналогичная ступенчатая функция.
+        \item $\xi: 0, 1, 2, \ldots, n$ и $p_k = P(\xi = k) = C_n^k p^k(1-p)^{n-k}$ 
+        — случайная величина с биномиальным законом распределения и
+        параметрами $n$ и $p$.
+    \end{enumerate}
+\end{examples}
 
 \end{document}
