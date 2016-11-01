@@ -1066,7 +1066,7 @@ $$
     $$
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{functions_of_independent_variables}
     Пусть $\xi, \eta$ — независимые случайные величины, $f, g$ — измеримые 
     функции. Тогда $f(\xi)$ и $g(\eta)$ — тоже независимые случайные величины.
 \end{theorem}
@@ -1346,9 +1346,9 @@ $$
         \item $D\xi \geqslant 0$. $D\xi = 0 \iff  \exists c:$ $P(\xi = c) = 1$
         \item Если $a, b \in \real$, то $D(a\xi + b) = a^2D\xi$
         \item Если $\xi, \eta$ — случайные величины, то $D(\xi + \eta) =
-        D\xi + D\eta _ 2E((\xi - E\xi)(\eta - E\eta))$.
+        D\xi + D\eta + 2E((\xi - E\xi)(\eta - E\eta))$.
         \item Если $\xi, \eta$ — независимые случайные величины, то
-        $D(\xi, \eta) = D\xi + D\eta$. Обратное, вообще говоря, неверно.
+        $D(\xi+ \eta) = D\xi + D\eta$. Обратное, вообще говоря, неверно.
         \item $D\xi = E\xi^2 - (E\xi)^2$
     \end{enumerate}
 \end{proposition}
@@ -1356,5 +1356,150 @@ $$
     Величина $E((\xi - E\xi)(\eta - E\eta))$ называется \emph{ковариацией}
     случайных величин $\xi$ и $\eta$. Обозначение: $\cov(\xi, \eta)$.
 \end{definition}
+
+\begin{proof}[Доказательство предложения]
+\mbox{}
+    \begin{enumerate}
+        \item Неотрицательность следует из свойств математического ожидания.
+        Далее, $D\xi = \int\limits_\Omega(\xi(\omega) - E\xi)^2\dif P(\omega) =
+        0$. Это означает, что $P(\xi - E\xi = 0) = 1$, возьмём $c = E\xi$.
+        \item $D(a\xi + b) = E(a\xi + b - E(a\xi + b))^2 =
+        E(a\xi + b - aE\xi - b)^2 = a^2E(\xi - E\xi)^2 = a^2D\xi$.
+        \item $D(\xi + \eta) = E(\xi + \eta - E\xi - E\eta)^2 = E(\xi - E\xi)^2 +
+        E(\eta - E\eta)^2 + 2E((\xi - E\xi)(\eta - E\eta))$
+        \item По теореме \ref{functions_of_independent_variables} $\xi - E\xi$ и
+        $\eta - E\eta$ будут независимыми, отсюда
+        $E((\xi - E\xi)(\eta - E\eta)) = E(\xi - E\xi)\cdot E(\eta - E\eta) = 0$.
+        Подставим полученный результат в предыдущее свойство.
+        \item $D\xi = E(\xi - E\xi) \ldots$
+    \end{enumerate}
+\end{proof}
+
+\begin{examples}
+    \begin{enumerate}
+        \item $(\xi, p): (c, 1)$ (вырожденное распределение). Тогда $E\xi = c$,
+        $D\xi = 0$.
+        \item Если $(\xi, p): (0, 1-p), (1-p, p)$, то $E\xi = p$, $D\xi = p(1-p)$.
+        \item $\xi \in B(n, p)$ — случайная величина с биномиальным законом
+        распределения, т. е. $p(\xi = k) = C_n^kp^k(q-p)^{n-k}$. Для этой величины
+        $E\xi = \sum\limits_{k=0}^n k\cdot C_n^kp^k(1-p)^{n-k} =
+        \sum\limits_{k=1}^n k\cdot C_n^kp^k(1-p)^{n-k} =
+        \sum\limits_{k=1}^n \frac{n!}{(k-1)!(n-k)!}p^k(1-p)^{n-k} =
+        np\sum\limits_{k=1}^n \frac{(n-1)!}{(k-1)!(n-1-(k-1))!}
+        p^{k-1}(1-p)^{n-1-(k-1)}$. Взяв $l = k-1$, получим
+        $E\xi = np\sum\limits_{l=0}^{n-1} C_n^l p^l(1-p)^{n-1 - l} = np$.
+        $D\xi = np(1-p)$.
+        \item Рассмотрим $\xi \in \Pi(\lambda)$ — случайную величину с 
+        пуассоновским законом распределения: $P(\xi = k) =
+        \frac{\lambda^k}{k!}e^{-\lambda}$.
+        $E\xi = \sum\limits_{k=0}^\infty k\frac{\lambda^k}{k!}e^{-\lambda} =
+        \sum\limits_{k=1}^\infty \frac{\lambda^k}{(k-1)!}e^{-\lambda} =
+        \lambda e^{-\lambda}\sum\limits_{k=1}^\infty
+        \frac{\lambda^{k-1}}{(k-1)!} =
+        \lambda$. Для вычисления дисперсии вычислим сначала
+        $E\xi^2 = \sum\limits_{k=0}^\infty k^2\frac{\lambda^k}{k!}e^{-\lambda} =
+        \sum\limits_{k=1}^\infty k\frac{\lambda^k}{(k-1)!}e^{-\lambda} =
+        \sum\limits_{k=1}^\infty (k-1)\frac{\lambda^k}{(k-1)!}e^{-\lambda} +
+        \sum\limits_{k=1}^\infty\frac{\lambda^k}{(k-1)!}e^{-\lambda} =
+        \sum\limits_{k=2}^\infty \frac{\lambda^k}{(k-2)!}e^{-\lambda} +
+        \lambda e^{-\lambda}
+        \sum\limits_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!} =
+        \lambda^2 e^{-\lambda}
+        \sum\limits_{k=2}^\infty\frac{\lambda^{k-2}}{(k-2)!}$
+        
+        $\cdots$
+        \item Для $\xi \in U_{[a,b]}$ математическое ожидание $E\xi =
+        \int\limits_a^b x\frac{1}{b-a}\dif x = \frac{a + b}{2}$. $E\xi^2 =
+        \int\limits_a^b x^2\frac{1}{b-a}\dif x = \frac{b^3 - a^3}{3(b-a)}$.
+        Тогда $D\xi = E\xi^2 - (E\xi)^2 = \frac{(b-a)^2}{12}$.
+        \item $\xi \in N(a, \sigma^2)$ — случайная величина с нормальным
+        законом распределения ($p_\xi(x) =
+        \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-a)^2}{2\sigma^2}}$).
+        $$
+        E\xi = \int\limits_{-\infty}^{+\infty}x\frac{1}{\sqrt{2\pi\sigma^2}}
+        e^{-\frac{(x-a)^2}{2\sigma^2}}\dif x =
+        \int\limits_{-\infty}^{+\infty}
+        (\sigma y - a)\frac{1}{\sqrt{2\pi\sigma^2}}
+        e^{-\frac{y^2}{2}}\sigma\dif y =
+        $$
+        $$
+        =\underbrace{\sigma \int\limits_{-\infty}^{+\infty}
+        y\frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}} \dif y}_0 +
+        a\int\limits_{-\infty}^{+\infty}
+        \frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}} \dif y = a
+        $$
+        $$
+        D\xi = \int\limits_{-\infty}^{+\infty}
+        (x-a)^2\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-a)^2}{2\sigma^2}} \dif x
+        = \int\limits_{-\infty}^{+\infty}
+        \sigma^2 y^2 \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{y^2}{2}}\sigma \dif y
+        = \sigma^2 \int\limits_{-\infty}^{+\infty}
+        y^2 \frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}}\dif y =
+        $$
+        $$
+        = \sigma^2 \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{+\infty}
+        y\cdot ye^{-\frac{y^2}{2}}\dif y = \sigma^2 \frac{1}{\sqrt{2\pi}}
+        \bigg[ -ye^{-\frac{y^2}{2}}\bigg|_{-\infty}^{+\infty} +
+        \int\limits_{-\infty}^{+\infty}e^{-\frac{y^2}{2}}\dif y\bigg] = \sigma^2
+        $$
+        \item $\xi$ — случайная величина с распределением Коши
+        ($p_\xi(x) = \frac{1}{\pi(1 + x^2)}$).
+        $\int\limits_{-\infty}^{+\infty} \frac{x}{\pi(1 + x^2)}\dif x$ — этот 
+        интеграл расходится, значит, математического ожидания не существует.
+    \end{enumerate}
+\end{examples}
+
+\section{Моменты случайных величин}
+
+\begin{definition}
+    Пусть $k$ — целое неотрицательное число, $\xi$ — случайная величина.
+    Число $E\xi^k$, если оно существует, называется $k$-м моментом $\xi$.
+    Число $E|\xi|^k$ — абсолютный $k$-й момент $\xi$.
+    Число $E(\xi - E\xi)^k$ — центральный $k$-й момент $\xi$.
+    Число $E|\xi - E\xi|^2$ — абсолютный центральный $k$-й момент $\xi$.
+\end{definition}
+
+Заметим, что все моменты величины $\xi$ существуют или отсутствуют одновременно.
+
+\begin{proposition}[Свойства моментов]
+\mbox{}
+    \begin{enumerate}
+        \item Пусть $n > m$ и существует $E\xi^n$. Тогда существует и $E\xi^m$.
+        \item (Неравенство Гёльдера) Если $p, q > 0$ и
+        $\frac{1}{p} + \frac{1}{q} = 1$, то $E|\xi\eta| \leqslant
+        (E|\xi|^p)^\frac{1}{p} \cdot (E|\eta|^q)^\frac{1}{q}$.
+        \item (Неравенство Коши-Буняковского-Шварца)
+        $E|\xi\eta| \leqslant \sqrt{E\xi^2} \cdot \sqrt{E\eta^2}$.
+        \item (Неравенство Ляпунова) Пусть $0 < p < q$. Тогда
+        $(E|\xi|^p)^\frac{1}{p} \leqslant (E|\xi|^q)^\frac{1}{q}$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item Ясно, что $|x|^m \leqslant |x|^n + 1$ для любого $x$. То есть,
+        $|\xi|^m \leqslant |\xi|^n + 1$ и
+        $E|\xi|^m \leqslant E|\xi|^n + 1 < \infty$.
+        \item Очевидно из неравенства Гёльдера для интегралов.
+        \item Это свойство — частный случай предыдущего при $p = q = \frac{1}{2}$.
+        \item Данное неравенство равносильно
+        $E|\xi|^p \leqslant (E|\xi|^q)^\frac{p}{q}$. С учётом
+        $\frac{p}{q} + \frac{q - p}{q} = 1$, применим неравенство Гёльдера:
+        $$
+        E(\xi|^p \cdot 1|) \leqslant (E|\xi|^q)^\frac{p}{q}\cdot
+        (E (1^\frac{q}{q - p}))^\frac{q - p}{q} = (E|\xi|^q)^\frac{p}{q}
+        $$
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}
+    Пусть $m,n > 0$. Смешанным моментом величин $\xi$, $\eta$ порядка $m$ плюс $n$ 
+    называется число $E\xi^m\eta^n$, если оно существует. Смешанным центральным 
+    моментом $\xi$, $\eta$ порядка $m$ плюс $n$ называется число
+    $E(\xi - E\xi)^m(\eta - E\eta)^n$.
+\end{definition}
+\begin{remark}
+    Таким образом, $\cov (\xi, \eta)$ является смешанным центральным моментом
+    величин порядка $1$ плюс $1$.
+\end{remark}
 
 \end{document}
