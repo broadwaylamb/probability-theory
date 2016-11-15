@@ -53,9 +53,12 @@
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\uto}{\rightrightarrows}
 \newcommand{\underto}[1]{\xrightarrow[#1]{}}
+\newcommand{\overto}[1]{\xrightarrow{#1}}
 \newcommand{\dif}{\, \mathrm d}
 \newcommand{\distr}{\mathfrak P_\xi}
 \newcommand{\funcdistr}{F_\xi}
+\newcommand{\ol}{\overline}
+
 \DeclareMathOperator{\Ree}{Re}
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Arg}{Arg}
@@ -560,7 +563,7 @@ $$
     $$
 \end{proof}
 
-\begin{theorem}[Закон больших чисел Бернулли]
+\begin{theorem}[Закон больших чисел Бернулли]\label{large_numbers_bernoulli}
     $$
     \forall \varepsilon > 0\quad P_n\bigg(\bigg|\frac{k_n}{n} -
     p\bigg| > \varepsilon\bigg)
@@ -1305,6 +1308,7 @@ $$
 \end{proof}
 
 \begin{theorem}[Следствие для произведения независимых случайных величин]
+    \label{expectation_for_independent_variables}
     Пусть $\xi, \eta$ — независимые случайные величины и, кроме того,
     существуют $E\xi$ и $E\eta$. Тогда $E(\xi\eta) = E\xi \cdot E\eta$.
 \end{theorem}
@@ -1501,5 +1505,508 @@ $$
     Таким образом, $\cov (\xi, \eta)$ является смешанным центральным моментом
     величин порядка $1$ плюс $1$.
 \end{remark}
+
+\section{Ковариация. Коэффициент корреляции}
+
+Рассматриваем вероятностное пространство $(\Omega, \mathfrak F, P)$.
+
+\begin{definition}
+    Если $\xi, \eta$ — случайные величины, то их ковариацией $\cov (\xi, \eta)$
+    называется число $E(\xi - E\xi)(\eta - E\eta)$.
+\end{definition}
+\begin{proposition}[Свойства ковариации]
+\mbox{}
+    \begin{enumerate}
+        \item $\cov(\xi, \eta) = E\xi\eta - E\xi E\eta$
+        \item Если $\alpha, \beta \in \real$, то $\cov(\alpha\xi + \beta, \eta) =
+        \alpha\cov(\xi, \eta)$
+        \item Если $\xi, \eta$ — независимые, то $\cov(\xi, \eta) = 0$. Обратное,
+        вообще говоря, неверно.
+    \end{enumerate}
+\end{proposition}
+\begin{definition}
+    Пусть существуют $D\xi > 0$ и $D\eta > 0$. Тогда число $\rho(\xi, \eta) =
+    \frac{\cov(\xi, \eta)}{\sqrt{D\xi\cdot D\eta}}$ называется \emph{коэффициентом
+    корреляции} случайных величин $\xi, \eta$.
+\end{definition}
+
+Заметим:
+$$
+\rho(\xi, \eta) =
+\frac{E(\xi - E\xi)(\eta - E\eta)}{\sqrt{(D\xi, D\eta)}} =
+E\frac{\xi - E\xi}{\sqrt{D\xi}}\cdot \frac{\eta - E\eta}{\sqrt{D\eta}}
+$$
+
+\begin{proposition}[Свойства коэффициента корреляции]
+\mbox{}
+    \begin{enumerate}
+        \item $-1 \leqslant \rho(\xi, \eta) \leqslant 1$
+        \item Если $\xi, \eta$ — независимые, то $\rho(\xi, \eta) = 0$. Обратное,
+        вообще говоря, неверно.
+        \item $|\rho(\xi, \eta)| = 1 \iff \exists a,b \in \real:$
+        $P(\xi = a\eta + b) = 1$ и $a\rho(\xi, \eta) > 0$.
+        \item 
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Ясно, что $E\frac{\xi - E\xi}{\sqrt{D\xi}} = 0$. Отсюда:
+    $$
+    D\frac{\xi - E\xi}{\sqrt{D\xi}} =
+    E\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}}\bigg)^2 =
+    \frac{1}{D\xi}E(\xi - E\xi)^2 = 1
+    $$
+    
+    Докажем свойства, пользуясь этими фактами.
+    \begin{enumerate}
+        \item
+        $$
+        |\rho(\xi, \eta)| = \bigg|E\frac{\xi - E\xi}{\sqrt{D\xi}}\cdot
+        \frac{\eta - E\eta}{\sqrt{D\eta}}\bigg| \leqslant
+        E\bigg|\frac{\xi - E\xi}{\sqrt{D\xi}}\bigg|\cdot
+        \bigg|\frac{\eta - E\eta}{\sqrt{D\eta}}\bigg| \leqslant
+        $$
+        $$
+        \leqslant
+        \sqrt{E\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}}\bigg)^2}
+        \sqrt{E\bigg(\frac{\eta - E\eta}{\sqrt{D\eta}}\bigg)^2} = 1
+        $$
+        \item Очевидно.
+        \item Пусть $\rho(\xi, \eta) = 1$. Тогда:
+        $$
+        D\bigg(\frac{\xi - E\xi}{\sqrt{E\xi}} -
+        \frac{\eta - E\eta}{\sqrt{D\eta}}\bigg) =
+        E\bigg(\frac{\xi - E\xi}{\sqrt{E\xi}} -
+        \frac{\eta - E\eta}{\sqrt{D\eta}}\bigg)^2 =
+        $$
+        $$
+        =
+        E\bigg(\frac{\xi - E\xi}{\sqrt{E\xi}}\bigg)^2 +
+        E\bigg(\frac{\eta - E\eta}{\sqrt{E\eta}}\bigg)^2 -
+        2E\frac{\xi - E\xi}{\sqrt{E\xi}} \cdot \frac{\eta - E\eta}{\sqrt{E\eta}} =
+        2 - 2\rho(\xi, \eta) = 0
+        $$
+        Это равносильно существованию такого $c \in \real$, что:
+        $$
+        P\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}}\mp
+        \frac{\eta - E\eta}{\sqrt{D\eta}} = c\bigg) = 1
+        $$
+        $$
+        P\bigg(\xi = \pm\frac{\sqrt{D\xi}}{\sqrt{D\eta}}\eta + b\bigg) = 1
+        $$
+    \end{enumerate}
+\end{proof}
+
+\begin{examples}
+\mbox{}
+    \begin{enumerate}
+        \item $\xi, \eta, \tau$ — независимые случайные величины.
+        $\xi \in U_{[-1, 0]}$,
+        $\eta \in N(0, 2)$, $\tau \in B(4, \frac{1}{2})$.
+        $$
+        \rho(\xi + \tau, \eta + \tau) =
+        \frac{E(\xi + \tau)(\eta + \tau) -
+        E(\xi + \tau)E(\eta + \tau)}{\sqrt{D(\xi + \tau)D(\eta + \tau)}} =
+        $$
+        $$
+        = \frac{E\xi E\eta + E\xi E\tau + E\tau E\eta + E\tau^2 - E\xi E\eta -
+        E\xi E\tau - E\tau E\eta - (E\tau)^2}{\sqrt{(D\xi + D\tau)(D\eta + 
+        D\tau)}} =
+        $$
+        $$
+        = \frac{D\tau}{\sqrt{(D\xi + D\tau)(D\eta + D\tau)}} =
+        \frac{1}{\sqrt{\big(\frac{1}{12} + 1\big)\big(2 + 1\big)}}
+        \approx 0.555
+        $$
+        \item Рассмотрим случайный вектор $(\xi, \eta)$ с законом распределения:
+        \begin{center}
+            \begin{tabular}{| c | c | c |}
+                \hline
+                $\eta\backslash\xi$ & $0$ & $1$ \\ \hline
+                $-1$ & $0.4$ & $0.1$ \\ \hline
+                $1$ & $0.3$ & $0.2$ \\ \hline
+            \end{tabular}
+        \end{center}
+        Найдём законы распределения каждой величины:
+        \begin{center}
+            \begin{tabular}{| c | c | c |}
+                \hline
+                $\xi$ & $0$ & $1$ \\ \hline
+                $p_\xi$ & $0.7$ & $0.3$ \\ \hline
+            \end{tabular}
+            \begin{tabular}{| c | c | c |}
+                \hline
+                $\eta$ & $-1$ & $1$ \\ \hline
+                $p_\eta$ & $0.5$ & $0.5$ \\ \hline
+            \end{tabular}
+        \end{center}
+        
+        $$
+        E\xi\eta = -0.1 + 0.2 = 0.1
+        $$
+        $$
+        \rho(\xi, \eta) = \frac{E\xi\eta - E\xi E\eta}{\sqrt{D\xi D\eta}} =
+        \frac{0.1 - 0.3 \cdot 0}{\sqrt{0.21 \cdot 1}} = \frac{0.1}{\sqrt{0.21}}
+        \approx 0.218
+        $$
+    \end{enumerate}
+\end{examples}
+
+\section{Неравенства Маркова и Чебышёва}
+
+Пусть $\xi$ — неотрицательная случайная величина.
+\begin{lemma}[Неравенство Маркова]
+    Для любого $t > 0$ выполнено $P(\xi \geqslant t) \leqslant \frac{E\xi}{t}$.
+\end{lemma}
+\begin{proof}
+    Рассмотрим $E\xi$ и распишем его по определению:
+    $$
+    E\xi = \int\limits_\Omega \xi(\omega) \dif P(\omega) =
+    \int\limits_{\omega:\, \xi(\omega)\geqslant t} \xi(\omega)\dif P(\omega) +
+    \underbrace{\int\limits_{\omega:\, \xi(\omega) < t}
+    \underbrace{\xi(\omega)}_{\geqslant 0} \dif P(\omega)}_{\geqslant 0} \geqslant
+    $$
+    $$
+    \geqslant \int\limits_{\xi(\omega) \geqslant t} \xi(\omega)\dif P(\omega)
+    \geqslant \int\limits_{\xi(\omega) \geqslant t} t\dif P(\omega) =
+    t\int\limits_{\xi(\omega) \geqslant t} \dif P9\omega) =
+    tP(\xi \geqslant t)
+    $$
+\end{proof}
+\begin{corollary}[Неравенство Чебышёва]
+    Пусть существует $D\xi$. Тогда для любых $t > 0$ выполнено
+    $P(|\xi - E\xi| \geqslant t) \leqslant \frac{D\xi}{t^2}$.
+\end{corollary}
+\begin{proof}
+    $$
+    P(|\xi - E\xi| \geqslant t) = P((\xi - E\xi)^2 \geqslant t^2) \leqslant
+    \frac{E(\xi - E\xi)^2}{t^2} = \frac{D\xi}{t^2}
+    $$
+\end{proof}
+
+\section{Виды сходимости случайных величин}
+
+Пусть $\xi$ — случайная величина, а
+$\xi_1, \xi_2, \ldots$ — последовательность случайных величин на 
+вероятностном пространстве $(\Omega, \mathfrak F, P)$.
+
+\begin{definition}[Сходимость по вероятности]\label{probability_convergence}
+    Последовательность $\{\xi_i\}_{i = 1}^\infty$ называется 
+    \emph{сходящейся по вероятности} (обозначается $\xi_n \overto{P} \xi$), если
+    $\forall \varepsilon > 0$ $P(|\xi_n - \xi| \geqslant \varepsilon)
+    \underto{n \to \infty} 0$.    
+\end{definition}
+
+\begin{definition}[Сходимость почти наверное]\label{almost_convergence}
+    Последовательность $\{\xi_i\}_{i = 1}^\infty$ называется 
+    \emph{сходящейся почти наверное} (обозначается $\xi_n \to \xi$), если
+    $P\Big(\lim\limits_{n \to \infty} \xi_n = \xi\Big) = 1$.
+\end{definition}
+
+\begin{definition}[Сходимость в среднем]\label{convergence_in_average}
+    Последовательность $\{\xi_i\}_{i = 1}^\infty$ называется 
+    \emph{сходящейся в среднем порядка $r > 0$}
+    (обозначается $\xi_n \overto{(r)} \xi$), если
+    $E|\xi_n - \xi|^r \underto{n \to \infty} 0$.
+\end{definition}
+
+\begin{definition}[Сходимость по распределению]\label{distribution_convergence}
+    Последовательность $\{\xi_i\}_{i = 1}^\infty$ называется 
+    \emph{сходящейся по распределению}, или \emph{слабо сходящейся}
+    (обозначается $\xi_n \overto{d} \xi$), если
+    для всех $x$ — точек непрерывности $F_\xi$ выполнено
+    $F_{\xi_n}(x) \to F_\xi (x)$.
+\end{definition}
+
+\begin{theorem}
+    Из сходимости почти наверное или в среднем следует сходимость по вероятности;
+    из сходимость по вероятности следует сходимость по распределению.
+\end{theorem}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item
+        (\ref{convergence_in_average} $\Rightarrow$
+        \ref{probability_convergence})
+        Рассмотрим произвольное $\varepsilon > 0$.
+        $$
+        P(|\xi_n - \xi| \geqslant \varepsilon) =
+        P(|\xi_n - \xi|^r \geqslant \varepsilon^r) \leqslant
+        \frac{E|\xi_n - \xi|^r}{\varepsilon^r} \underto{n \to \infty} 0
+        $$
+        \item
+        (\ref{probability_convergence} $\Rightarrow$ 
+        \ref{distribution_convergence})
+        Пусть $\tau, \eta$ — случайные величины. Заметим, что верно включение:
+        $$
+        (\eta < x) \subset (|\eta - \tau| \geqslant \varepsilon) \cup
+        (\tau < x + \varepsilon )
+        $$
+        Отсюда:
+        $$
+        F_\eta(x) \leqslant P(|\eta - \tau| \geqslant \varepsilon) +
+        F_\tau(x + \varepsilon)
+        $$
+        Пусть теперь $x$ — точка непрерывности $F_\xi$.
+        $$
+        F_{\xi_n}(x) \leqslant P(|\xi_n - \xi| \geqslant \varepsilon) +
+        F_\xi(x + \varepsilon) \implies
+        \lim\limits_{n \to \infty} \sup F_{\xi_n}(x) \leqslant
+        F_\xi(x - \varepsilon)
+        $$
+        $$
+        F_\xi(x - \varepsilon) \leqslant P(|\xi_n - \xi| \geqslant \varepsilon) +
+        F_{\xi_n}(x) \implies
+        F_\xi(x - \varepsilon) \leqslant
+        \lim\limits_{n \to \infty} \inf F_{\xi_n}(x)
+        $$
+        То есть:
+        $$
+        F_\xi(x - \varepsilon) \leqslant
+        \lim\limits_{n \to \infty} \inf F_{\xi_n}(x) \leqslant
+        \lim\limits_{n \to \infty} \sup F_{\xi_n}(x) \leqslant
+        F_\xi(x - \varepsilon)
+        $$
+        Устремив $\varepsilon$ к нулю, получим:
+        $$
+        F_\xi(x) \leqslant
+        \lim\limits_{n \to \infty} \inf F_{\xi_n}(x) \leqslant
+        \lim\limits_{n \to \infty} \sup F_{\xi_n}(x) \leqslant
+        F_\xi(x)
+        $$
+        
+        Значит, существует $\lim\limits_{n \to \infty} F_{\xi_n}(x) = F_\xi(x)$.
+        \item
+        (\ref{almost_convergence} $\Rightarrow$ 
+        \ref{probability_convergence})
+        Сходимость почти наверное равносильна тому, что
+        $$
+        P\bigg(\underbrace{\bigcap_{r=1}^\infty\bigcup_{n=1}^\infty
+        \bigcap_{m=n}^\infty
+        \Big(|\xi_n - \xi| < \frac{1}{r}\Big)}_{\xi_m \to \xi}\bigg) = 1
+        $$
+        Или, что то же самое:
+        $$
+        P\bigg(\bigcup_{r=1}^\infty\bigcap_{n=1}^\infty\bigcup_{m=n}^\infty
+        \Big(|\xi_m - \xi| \geqslant \frac{1}{r}\Big)\bigg) = 0
+        $$
+        $$
+        \forall r\geqslant 1\quad
+        P\bigg(\bigcap_{n=1}^\infty\underbrace{\bigcup_{m=n}^\infty\Big(|\xi_m - \xi| 
+        \geqslant \frac{1}{r}\Big)}_{B_n}\bigg) = 0
+        $$
+        Заметим, что $B_n \supset B_{n+1}$.
+        $$
+        \forall r\geqslant1\quad
+        \lim\limits_{n \to \infty}P\bigg(\underbrace{\bigcup_{m=n}^\infty
+        \Big(|\xi_m - \xi| 
+        \geqslant \frac{1}{r}\Big)}_{\sup\limits_{m \geqslant n} |\xi_m - \xi| \geqslant
+        \frac{1}{r}}\bigg) = 0
+        $$
+        Отсюда:
+        $$
+        \Big(|\xi_n - \xi| \geqslant \frac{1}{r}\Big) \subset
+        \Big(\sup\limits_{m\geqslant n} |\xi_m - \xi| \geqslant \frac{1}{r}\Big)
+        $$
+        $$
+        \forall r\geqslant 1\quad
+        P\Big(|\xi_n - \xi| \geqslant \frac{1}{r}\Big) \underto{n \to \infty} 0
+        $$
+    \end{enumerate}
+\end{proof}
+
+\section{Законы больших чисел}
+
+\begin{definition}[<<Слабый>> закон больших чисел]
+    Пусть $\xi_1, \xi_2,\ldots$ — последовательность случайных величин, у каждой
+    из которых существует математическое ожидание $E\xi_k = a_k$. Говорят,
+    что для этой последовательности выполняется закон больших чисел, если:
+    $$
+    \forall \varepsilon > 0\quad
+    P\bigg(\bigg|\frac{1}{n}\sum\limits_{k=1}^n \xi_k -
+    \frac{1}{n}\sum\limits_{k=1}^na_k\bigg| \geqslant \varepsilon \bigg)
+    \underto{n \to \infty} 0
+    $$
+    Или, что то же самое:
+    $$
+    \forall \varepsilon > 0\quad
+    P\bigg(\bigg|\frac{1}{n}\sum\limits_{k=1}^n(\xi_k - E\xi_k)\bigg|\geqslant 
+    \varepsilon\bigg) \underto{n \to \infty} 0
+    $$
+    Или:
+    $$
+    \frac{1}{n}\sum\limits_{k=1}^n(\xi_k - E\xi_k) \overto{P} 0
+    $$
+\end{definition}
+
+\begin{theorem}[Закон больших чисел Маркова]
+    Пусть $\xi_1, \xi_2,\ldots$ — последовательность случайных величин и пусть
+    для любого $n \geqslant 1$ существуют $D\sum\limits_{k=1}^n \xi_k$,
+    $\frac{1}{n^2}D\sum\limits_{k=1}^n \xi_k \underto{n \to \infty}~0$.
+    Тогда выполняется закон больших чисел.
+\end{theorem}
+\begin{proof}
+    Возьмём произвольное $\varepsilon > 0$. Тогда из неравенства Чебышёва:
+    $$
+    P\bigg(\bigg|\frac{1}{n}\sum\limits_{k=1}^n\xi_k -
+    \underbrace{\frac{1}{n}\sum\limits_{k=1}^na_k}_
+    {E\frac{1}{n}\sum\limits_{k=1}^n \xi_k}
+    \bigg| \geqslant \varepsilon\bigg) \leqslant
+    \frac{D\Big(\frac{1}{n}\sum\limits_{k=1}^n \xi_k\Big)}{\varepsilon^2} =
+    \frac{D\Big(\sum\limits_{k=1}^n \xi_k}{n^2 \varepsilon^2}
+    \underto{n \to \infty} 0
+    $$
+\end{proof}
+\begin{theorem}[Закон большых чисел Чебышёва]
+    Пусть $\xi_1, \xi_2,\ldots$ — последовательность независимых случайных величин
+    и существует $c > 0$ такое, что $\forall n$ $D\xi_n \leqslant c$. Тогда
+    выполняется закон больших чисел.
+\end{theorem}
+\begin{proof}
+    $$
+    P\bigg(\bigg|\frac{1}{n}\sum\limits_{k=1}^n\xi_k -
+    \frac{1}{n}\sum\limits_{k=1}^na_k\bigg| \geqslant \varepsilon\bigg) \leqslant
+    \frac{D\sum\limits_{k=1}^n\xi_k}{n^2\varepsilon^2} =
+    \frac{\sum\limits_{k=1}^n D\xi_k}{n^2\varepsilon^2} \leqslant
+    \frac{nc}{n^2\varepsilon^2} \underto{n \to \infty} 0
+    $$
+\end{proof}
+\begin{remark}
+    Теорема \ref{large_numbers_bernoulli} (Бернулли) является частным случаем
+    теоремы Чебышёва.
+    
+    Пусть $\eta_1, \eta_2,\ldots$ — последовательность независимых одинаково
+    распределённых случайных величин с законом распределения:
+    \begin{center}
+        \begin{tabular}{| c | c | c |}
+            \hline
+            $\eta_k$ & $0$ & $1$ \\ \hline
+            $p_{\eta_k}$ & $1-p$ & $p$ \\ \hline
+        \end{tabular}
+    \end{center}
+    $$
+    E\eta_k = p,\quad D\eta_k = p(1-p) \leqslant 1
+    $$
+    $$
+    P\bigg(\bigg|\frac{1}{n}\sum\limits_{i=1}^n \eta_i - p\bigg| \geqslant 
+    \varepsilon\bigg) \to 0
+    $$
+\end{remark}
+
+\begin{theorem}[Закон больших чисел Хинчина]
+    Пусть $\xi_1, \xi_2,\ldots$ — последовательность независимых одинаково
+    распределённых случайных величин, у которых существует математическое ожидание
+    $E_{\xi_k} = a$. Тогда выполняется закон больших чисел.
+\end{theorem}
+
+Мы докажем эту теорему позже.
+
+\section{Характеристические функции}
+
+\begin{definition}
+    Пусть $\xi, \eta$ — случайные величины, определённые на вероятностном
+    пространстве $(\Omega, \mathfrak F, P)$. Рассмотрим отображение
+    $\xi + i\eta: \Omega \to \complex$ такое, что $\forall \omega$
+    $(\xi + i\eta)(\omega) = \xi(\omega) + i\eta(\omega)$. $\xi + i\eta$ 
+    называется \emph{комплекснозначной случайной величиной}.
+\end{definition}
+\begin{definition}
+    Математическим ожиданием комплекснозначной величины называется число
+    $E\xi + iE\eta$.
+\end{definition}
+\begin{definition}
+    Случайные величины $\xi_1 + i\eta_1, \xi_2 + i\eta_2$ называются независимыми,
+    если $\forall C_1, C_2 \subset \complex$ $(\xi_1 + i\eta_1)^{-1}(C_1)$ и
+    $(\xi_2 + i\eta_2)^{-1}(C_2)$ — независимые события, или, что то же самое,
+    $(\xi_1, \eta_1)$ и $(\xi_2, \eta_2)$ — независимые случайные векторы.
+\end{definition}
+\begin{definition}
+    Рассмотрим функцию $f_\xi: \real \to \complex$ такую, что
+    $\forall t$ $f_\xi(t) = Ee^{it\xi}$. Такая функция называется
+    \emph{характеристической функцией} случайной величины $\xi$.
+\end{definition}
+
+Рассмотрим случай дискретного распределения с законом:
+\begin{center}
+    \begin{tabular}{| c | c | c | c |}
+        \hline
+        $\xi$ & $a_1$ & $a_2$ & $\ldots$ \\ \hline
+        $p_\xi$ & $p_1$ & $p_2$ & $\ldots$ \\ \hline
+    \end{tabular}
+\end{center}
+Тогда $f_\xi(t) = \sum\limits_k e^{ita_k}p_k$.
+
+В случае абсолютно непрерывного распределения $f_\xi(t) =
+\int\limits_{\infty}^{+\infty} e^{itx}p_\xi(x)\dif x$.
+
+\begin{proposition}[Свойства характеристической функции]
+\mbox{}
+    \begin{enumerate}
+        \item\label{charfunc_limit} $|f_\xi(t)| \leqslant 1$.
+        \item $f_\xi(0) = 1$.
+        \item $f_{a\xi + \beta}(t) = e^{it\beta}\cdot f_\xi(\alpha\cdot t)$
+        ($\alpha, \beta \in \real$).
+        \item $f_\xi(-t) = \ol{f_\xi(t)}$.
+        \item\label{charfunc_uniformly_continuous}
+        $f_\xi(t)$ равномерно непрерывна на $\real$.
+        \item\label{charfunc_independent_variables}
+        Если $\xi, \eta$ — независимые, то
+        $f_{\xi + \eta}(t) = f_\xi(t)f_\eta(t)$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    Свойство \ref{charfunc_limit}:
+    $$
+    |Ee^{it\eta}| \leqslant E|e^{it\xi}| = E1 = 1
+    $$
+    Свойство \ref{charfunc_uniformly_continuous}:
+    $$
+    |f_\xi(t + h) - f_\xi(t)| = |Ee^{i(t+h)\xi} - Ee^{it\xi}| =
+    |Ee^{it\xi}(e^{ih\xi} - 1)| \leqslant
+    E|\underbrace{e^{ih\xi} - 1}_{\leqslant 2}| \underto{h \to 0} 0
+    $$
+    Свойство \ref{charfunc_independent_variables}:
+    $$
+    f_{\xi + \eta}(t) = Ee^{it(\xi + \eta)} = Ee^{it\xi}e^{it\eta} =
+    Ee^{it\xi}Ee^{it\eta} = f_\xi(t) + f_\eta(t)
+    $$
+    Здесь мы воспользовались теоремой \ref{expectation_for_independent_variables}.
+\end{proof}
+
+\begin{examples}
+\mbox{}
+    \begin{enumerate}
+        \item $P(\xi = c) = 1$. $f_\xi(t) = e^{itc}$.
+        \item $\xi$ имеет распределение Бернулли:
+        \begin{center}
+            \begin{tabular}{| c | c | c |}
+                \hline
+                $\xi$ & $0$ & $1$ \\ \hline
+                $p_\xi$ & $1-p$ & $p$ \\ \hline
+            \end{tabular}
+        \end{center}
+        $f_\xi(t) = pe^{it} + 1 - p$.
+        \item $\xi \in B(n, p)$.
+        $f_\xi(t) = \sum\limits_{k=0}^n e^{itk}C_n^kp^k(1-p)^{n-k} =
+        (pe^{it} + 1 - p)^n$.
+        \item $\xi \in \Pi(\lambda)$.
+        $f_\xi(t) = \sum\limits_{k=0}^\infty
+        e^{itk} \frac{\lambda^k}{k!}e^{-\lambda} =
+        e^{-\lambda}\sum\limits_{k=0}^\infty\frac{(\lambda e^{it})^k}{k!} =
+        e^{-\lambda}e^{\lambda e^{it}} = e^{\lambda(e^{it} - 1)}$.
+        \item Случайная величина $\xi$ имеет закон распределения:
+        \begin{center}
+            \begin{tabular}{| c | c | c |}
+                \hline
+                $\xi$ & $-1$ & $1$ \\ \hline
+                $p_\xi$ & $\frac{1}{2}$ & $\frac{1}{2}$ \\ \hline
+            \end{tabular}
+        \end{center}
+        $f_\xi(t) = \cos t$.
+        \item $\xi \in U_{[a, b]}$. $f_\xi(t) =
+        \int\limits_a^b e^{itx} \frac{1}{b-a}\dif x =
+        \frac{e^{itb} - e^{ita}}{it(b-a)}$.
+        Если $\xi \in U_{[-a, a]}$, то $f_\xi(t) = \frac{\sin at}{at}$.
+    \end{enumerate}
+\end{examples}
 
 \end{document}
