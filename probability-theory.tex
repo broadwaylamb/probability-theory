@@ -489,7 +489,7 @@ $$
 Попробуем ответить на вопрос: как найти $P_n(a < \text{число успехов} < b)$
 при $a<b$ и больших $n$? Применение локальной теоремы Муавра-Лапласа может давать
 слишком высокие погрешности, поэтому необходимо использовать иное решение.
-\begin{theorem}[Интегральная теорема Муавра-Лапласа]
+\begin{theorem}[Интегральная теорема Муавра-Лапласа]\label{integral_theorem}
     Пусть $p$ — вероятность успеха, $0 < p < 1$. Тогда:
     $$
     \sup_{a<b} \Bigg| P_n(a < \text{число успехов} < b) -
@@ -1892,7 +1892,7 @@ $\xi_1, \xi_2, \ldots$ — последовательность случайны
     $$
 \end{remark}
 
-\begin{theorem}[Закон больших чисел Хинчина]
+\begin{theorem}[Закон больших чисел Хинчина]\label{hinchins_lln}
     Пусть $\xi_1, \xi_2,\ldots$ — последовательность независимых одинаково
     распределённых случайных величин, у которых существует математическое ожидание
     $E_{\xi_k} = a$. Тогда выполняется закон больших чисел.
@@ -1936,7 +1936,7 @@ $\xi_1, \xi_2, \ldots$ — последовательность случайны
 Тогда $f_\xi(t) = \sum\limits_k e^{ita_k}p_k$.
 
 В случае абсолютно непрерывного распределения $f_\xi(t) =
-\int\limits_{\infty}^{+\infty} e^{itx}p_\xi(x)\dif x$.
+\int\limits_{-\infty}^{+\infty} e^{itx}p_\xi(x)\dif x$.
 
 \begin{proposition}[Свойства характеристической функции]
 \mbox{}
@@ -2006,7 +2006,777 @@ $\xi_1, \xi_2, \ldots$ — последовательность случайны
         \int\limits_a^b e^{itx} \frac{1}{b-a}\dif x =
         \frac{e^{itb} - e^{ita}}{it(b-a)}$.
         Если $\xi \in U_{[-a, a]}$, то $f_\xi(t) = \frac{\sin at}{at}$.
+        \item $\xi \in N(0, 1)$. $p(x) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$.
+        $$
+        f_\xi(t) = \int\limits_{-\infty}^{+\infty}
+        e^{itx}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dif x
+        $$.
+        $$
+        f'_\xi(t) = i\int\limits_{-\infty}^{+\infty}
+        xe^{itx}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dif x =
+        \underbrace{-ie^{itx}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}
+        \bigg|_{-\infty}^{+\infty}}_{0} -
+        t\int\limits_{-\infty}^{+\infty}
+        e^{itx}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dif x = -tf_\xi(t)
+        $$
+        Отсюда $\ln f_\xi(t) = -\frac{t^2}{2} + C$, $f_\xi(t) = e^{-\frac{t^2}{2}}
+        \cdot e^C$, $C = 0$. Таким образом, $f_\xi(t) = e^{-\frac{t^2}{2}}$
+        \item $\xi \in N(a, \sigma^2)$.
+        Тогда $\frac{\xi - a}{\sigma} \in N(0, 1)$.
+        $f_{\frac{\xi - a}{\sigma}}(t) = e^{-\frac{t^2}{2}}$ и $f_\xi(t) =
+        e^{ita}e^{-\frac{t^2\sigma^2}{2}}$.
     \end{enumerate}
 \end{examples}
+
+Мы выяснили, что каждой функции распределения соответствует единственная функция
+распределения. Покажем теперь, что верно и обратное.
+
+\section{Формула обращения и теорема единственности}
+
+Рассмотрим функцию $f: \real \to \real$, $f \in L_1$ , т. е. суммируемую.
+\emph{Преобразованием Фурье} функции $f$ называется функция
+%$\check{f}$
+
+$\ldots$
+
+\begin{theorem}[Формула обращения]
+    Пусть $\xi$ — случайная величина с функцией распределения $F_\xi$ и
+    характеристической функцией $f_\xi(t)$. Пусть также $x \in \real$ — 
+    произвольное число, $l > 0$ и $x + l$, $x - l$ — точки непрерывности функции
+    $F_\xi$. Тогда:
+    $$
+    F_\xi(x+l) - F_\xi(x-l) =
+    \lim\limits_{\sigma \to 0} \frac{1}{\pi} \int\limits_{-\infty}^{+\infty}
+    e^{itx} f_\xi(t) \frac{\sin tl}{t}e^{-\frac{t^2\sigma^2}{2}} \dif t
+    $$
+\end{theorem}
+
+\begin{theorem}[Единственности]
+    Разным функциям распределения $F$ и $G$ соответствуют разные 
+    характеристические функции $f$ и $g$.
+\end{theorem}
+\begin{proof}
+    Докажем теорему от противного. Пусть $F \to f$, $G \to f$, то есть двум 
+    различным функция распределения соответствует одна и та же характеристическая
+    функция. Рассмотрим $D_F$ — множество точек непрерывности функции $F$ и
+    $D_G$ — множество точек непрерывности функции $G$. Заметим, что $D_F$ и $D_G$ 
+    — всюду плотные, то есть $\ol{D_F} = \ol{D_G} = \real$. Тогда и $D_G \cap D_F$
+    — всюду плотное множество на $\real$. Чтобы воспользоваться формулой 
+    обращения, возьмём $a$, $b$ ($a < b$) — точки непрерывности $F$. Тогда:
+    $$
+    F(b) - F(a) = \lim\limits_{\sigma \to 0} \frac{1}{\pi}
+    \int\limits_{-\infty}^{\infty} e^{-it\frac{a+b}{2}}f(t)
+    \frac{\sin t\frac{a + b}{2}}{t}e^{-\frac{t^2\sigma^2}{2}}\dif t
+    $$
+    Выбрав такие $a, b \in D_G \cap D_F$, получим:
+    $F(b) - F(a) = G(b) - G(a)$. Устремив $a$ к $-\infty$, получим $F(b) = G(b)$,
+    это выполняется для всех точек непрерывности.
+\end{proof}
+
+\section{Связь характеристических функций и моментов случайных величин}
+
+\begin{theorem}[О связи моментов и характеристических функций]
+    Пусть $\xi$ — случайная величина, у которой существует момент порядка $n$.
+    Тогда существует $f_\xi^{(n)}$ и $f_\xi^{(n)}(0) = i^n E\xi^n$.
+\end{theorem}
+\begin{proof}
+    Будем доказывать по индукции.
+    Пусть $n \geqslant 1$ и существует момент порядка $n$. Докажем сначала,
+    что существует первая производная. Рассмотрим функцию
+    $\frac{f_\xi(t + h) - f_\xi(t)}{h}$ и покажем, что у неё существует предел
+    при $h \to 0$.
+    $$
+    \frac{f_\xi(t + h) - f_\xi(t)}{h} = E\frac{1}{h}(e^{i(t+h)\xi} - e^{}it\xi) =
+    E\frac{1}{h}(e^{ih\xi} - 1)e^{it\xi}
+    $$
+    $$
+    \bigg|\frac{1}{h}(e^{ig\xi} - 1)\bigg| \leqslant \frac{2}{h}
+    $$
+    $$
+    \frac{1}{h}(e^{ih\xi} - 1) \underto{h \to 0} i\xi
+    $$
+    Отсюда по теореме Лебега:
+    $$
+    E\frac{1}{h}(e^{ih\xi} - 1)e^{it\xi} \underto{h \to 0} iE\xi e^{it\xi}
+    $$
+    То есть производная существует и равна:
+    $$
+    f'_\xi(t) = iE\xi e^{it\xi}
+    $$
+    
+    Пусть теперь для любого $k \leqslant n - 1$ существует
+    $f_\xi^{(k)}(t) = i^k E\xi^k e^{it\xi}$.
+    $$
+    \frac{f_\xi^{(n-1)}(t + h) - f_\xi^{(n-1)}(t)}{h} =
+    i^{n-1}E\frac{1}{h}\xi^{n-1}(e^{i(t+h)\xi} - e^{it\xi}) =
+    $$
+    $$
+    = i^{n-1}E\frac{e^{ih\xi} - 1}{h} \xi^{n-1} e^{it\xi} \underto{h \to 0}
+    i^nE\xi^n e^{it\xi}
+    $$
+\end{proof}
+\begin{corollary}
+    Пусть существует момент порядка $n$ случайной величины $\xi$, который мы
+    обозначим $E\xi^n = m_n$. Тогда:
+    $$
+    f_\xi(t) = \sum\limits_{k=0}^n \frac{(it)^k}{k!}m_k + o(t^n)
+    $$
+\end{corollary}
+
+\section{Непрерывность соответствия между характеристической функцией и функцией
+распределения}
+
+Рассмотрим множество $\mathfrak F$ всех функций распределения и множество
+$\mathfrak f$ всех характеристических функций. Мы установили, что между этими
+множествами существует биекция. При этом последовательность функций распределения,
+вообще говоря, не обязательно сходится к функции, являющейся функцией 
+распределения. Аналогичное верно и для характеристических функций.
+
+\begin{theorem}
+    Пусть $F, F_1, F_2, \ldots$ — последовательность функций распределения,
+    $f, f_1, f_2, \ldots$ — последовательность соответствующих им 
+    характеристических функций. Пусть также для любой $x$ — точки непрерывности 
+    $F$ выполнено $F_k(x) \underto{k \to \infty} F(x)$. Тогда для любого $t$
+    $f_k(t) \underto{k \to \infty} f(t)$.
+\end{theorem}
+\begin{theorem}[Обратная]\label{reverse_char_dist}
+    Пусть существует $\lim\limits_{n \to \infty} f_n(t) = f(t)$, непрерывный в 
+    точке $0$. Тогда:
+    \begin{enumerate}
+        \item $f(t)$ — характеристическая функция.
+        \item $F_n(x) \to F(x)$ для всех $x$ — точек непрерывности $x$, где
+        $F$ — функция распределения, соответствующая $f$.
+    \end{enumerate}
+\end{theorem}
+
+Пользуясь этими утверждениями, докажем ранее сформулированные теоремы.
+
+\begin{proof}[Доказательство теоремы \ref{hinchins_lln}]
+    Рассмотрим $E(\xi_k - a) = 0$. Тогда:
+    $$
+    f_{\xi_k - a}(t) = 1 + o(t)
+    $$
+    Рассмотрим характеристическую функцию:
+    $$
+    f_{\frac{1}{n}\sum\limits_{k=1}^n (\xi_k - a)}(t) =
+    f_{\sum\limits_{k=1}^n (\xi_k - a)}\bigg(\frac{t}{n}\bigg) =
+    \bigg(f_{\xi_1 - a}\bigg(\frac{t}{n}\bigg)\bigg)^n =
+    \bigg(1 + o\bigg(\frac{t}{n}\bigg)\bigg)^n \underto{n \to \infty} 1
+    $$
+    Отсюда по теореме \ref{reverse_char_dist}:
+    $$
+    F_{\frac{1}{n}\sum\limits_{k=1}^n (\xi_k - a)}(x) \to
+    \begin{cases}
+        0,\quad x < 0 \\
+        1,\quad x > 0 \\
+    \end{cases}
+    $$
+    
+    Мы показали сходимость по распределению, а нам требуется сходимость по 
+    вероятности.
+    $$
+    \ldots
+    $$
+\end{proof}
+
+\section{Центральная предельная теорема}
+
+\begin{definition}
+    Пусть $\xi_1, \xi_2, \ldots$ — последовательность случайных величин,
+    $A_n = E\sum\limits_{i=1}^n\xi_i$, $B_n^2 = D\sum\limits_{i=1}^n\xi_n$, причём
+    $B_n^2 \underto{n \to \infty} \infty$. Говорят, что для этой последовательности
+    выполняется центральная предельная теорема, если для всех $x \in \real$:
+    $$
+    P\Bigg(\frac{\sum\limits_{i=1}^n \xi_i - A_n}{B_n} < x\Bigg) \underto{n \to \infty}
+    \Phi(x) = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^x e^{\frac{-u^2}{2}}\dif u
+    $$
+    Или, что то же самое:
+    $$
+    \frac{\sum\limits_{i=1}^n \xi_i - A_n}{B_n} \overto{\mathrm d} N(0, 1)
+    $$
+\end{definition}
+
+\begin{theorem}[Центральная предельная теорема Леви]
+    Пусть $\xi_1, \xi_2, \ldots$ — последовательность независимых одинаково распределённых 
+    случайных величин, у которых существует математическое ожидание $E\xi_k = a$ и 
+    дисперсия $D\xi_k = \sigma^2 < \infty$. Тогда для этой последовательности
+    выполняется центральная предельная теорема.
+\end{theorem}
+\begin{proof}
+    Нам нужно доказать, что
+    $\frac{\sum\limits_{k=1}^n\xi_k - na}{\sqrt{n\sigma^2}} \overto{\mathrm d} N(0,1)$.
+    Мы знаем, что это равносильно сходимости характеристических функций:
+    $$
+    f_{\frac{\sum\limits_{k=1}^n\xi_k - na}{\sqrt{n\sigma^2}}}(t) \underto{n \to \infty}
+    e^{-\frac{t^2}{2}}
+    $$
+    Рассмотрим характеристическую функцию случайной величины $\frac{\xi_k - a}{\sigma}$. 
+    Заметим, что $E\frac{\xi_k - a}{\sigma} = 0$, $D\frac{\xi_k - a}{\sigma} = 1 =
+    E\Big(\frac{\xi_k - a}{\sigma}\Big)^2$. Тогда характеристическую функцию можно
+    разложить в ряд Тейлора:
+    $$
+    f_{\frac{\xi_k - a}{\sigma}} = 1 + \frac{(it)^2}{2} + o(t^2) = 1 - \frac{t^2}{2} + o(1)
+    $$
+    Отсюда:
+    $$
+    f_{\frac{\sum\limits_{k=1}^n\xi_k - na}{\sqrt{n\sigma^2}}}(t) =
+    f_{\frac{1}{\sqrt{n}} \sum\limits_{k=1}^n \frac{\xi_k - a}{\sigma}}(t) =
+    f_{\sum\limits_{k=1}^n \frac{\xi_k - a}{\sigma}} \bigg(\frac{t}{\sqrt{n}}\bigg) =
+    \prod\limits_{k=1}^n f_{\frac{\xi_k - a}{\sigma}}\bigg(\frac{t}{\sqrt{n}}\bigg) =
+    \Bigg(f_{\frac{\xi_k - a}{\sigma}}\bigg(\frac{t}{\sqrt{n}}\bigg)\Bigg)^n =
+    $$
+    $$
+    = \bigg(1 - \frac{t^2}{2n} + o\bigg(\frac{t^2}{n}\bigg)\bigg)^n \underto{n \to \infty}
+    e^{-\frac{t^2}{2}}
+    $$
+\end{proof}
+
+Докажем, что интегральная теорема Муарва-Лапласа (\ref{integral_theorem}) является частным
+случаем теоремы Леви.
+
+Пусть $\xi_1, \xi_2,\ldots$ — независимые одинаково распределённые случайные величины с
+законом распределения:
+\begin{center}
+    \begin{tabular}{| c | c | c |}
+        \hline
+        $\xi_k$ & $0$ & $1$ \\ \hline
+        $p_k$ & $1-p$ & $p$ \\ \hline
+    \end{tabular}
+\end{center}
+    
+$$
+P\bigg(\sum\limits_{k=1}^n\xi_k < b) =
+P\Bigg(\frac{\sum\limits_{k=1}^n \xi_k - np}{\sqrt{np(1-p)}} < \frac{b - np}{\sqrt{np(1-p)}}
+\Bigg) \sim \Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)
+$$
+
+\begin{theorem}[Центральная предельная теорема Ляпунова]
+    Пусть $\xi_1, \xi_2, \ldots$ — последовательность независимых одинаково распределённых 
+    случайных величин, у которых существуют математическое ожидание $E\xi_k = a$, 
+    дисперсия $D\xi_k = \sigma^2 < \infty$ и третьи центральные абсолютные моменты
+    $c_k^3 = E|\xi_k - a_k|^3 < \infty$. Возьмём $A_n = \sum\limits_{k=1}^n a_k$,
+    $B_n^2 = \sum\limits_{k=1}^n \sigma_k^2$, $C_n^3 = \sum\limits_{k=1}^n c_k^3$.
+    Пусть также $L_n = \frac{C_n}{B_n} \underto{n \to \infty} 0$. Тогда для
+    последовательности выполняется центральная предельная теорема.
+\end{theorem}
+
+\section{Математическая статистика}
+
+\begin{example}
+    Допустим, у нас имеется ящик с $M$ занумерованными шариками. Мы хотим за конечное число
+    экспериментов (<<доставаний>>) определить число $M$. Пусть $X_i$ — результат
+    $i$-го эксперимента. Мы можем рассматривать $X_1, X_2, \ldots, X_n$ как независимые 
+    одинаково распределённые случайные величины с некоторой функцией распределения $F(x)$.
+\end{example}
+
+В математической статистике набор $X_1, X_2, \ldots, X_n$ называется
+\emph{случайной выборкой}, а функция распределения $F(x)$ —
+\emph{генеральной функцией распределения}.
+
+Другой тип задач заключается в нахождении некоторого параметра $\alpha$, от которого
+может зависеть функция распределения $F(x, \alpha)$.
+
+Пусть $G(X_1, X_2 \ldots, X_n) = g_n$. Такая величина называется \emph{статистикой}, или 
+\emph{оценкой}.
+
+$$
+\widetilde{F}_n(t) = \frac{\text{число тех } X_i \text{, которые меньше } t}{n} =
+\frac{1}{n}\sum\limits_{i=1}^n\mathbb I_{(-\infty, t)}(X_i)
+$$
+Здесь $\mathbb I_A(x) = \begin{cases}
+    1,\quad x \in A \\
+    0,\quad x \notin A \\
+\end{cases}$.
+
+\begin{enumerate}
+    \item $\frac{1}{n}\sum\limits_{i=1}^n X_i^k$
+    \item $\frac{1}{n}\sum\limits_{i=1}^nX_i = \ol X$
+    \item $\frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^k$
+    \item $\frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^2 = s^2 =
+    \frac{1}{n}\sum\limits_{i=1}^n X_i^2 - {\ol X}^2$
+    \item $s_0^2 = \frac{1}{n-1}\sum\limits_{i=1}^n(X_i - \ol X)^2$
+\end{enumerate}
+
+Рассмотрим $X_{(1)} = \min(X_1, \ldots, X_n)$, $X_{(2)}$ — следующее по величине значение,
+и так далее, $X_{(n)} = \max(X_1, \ldots, X_n)$.
+
+$X_{(k)}$ — $k$-я порядковая статистика.
+
+$$
+G(k(x) = P\big(X_{(k)} < x\big) = \sum\limits_{i=k}^nC_n^i(F(x))^i(1-F(x))^{n-i}
+$$
+
+Определим \emph{медиану} выборки как $m_{\frac{1}{2}} = \begin{cases}
+    X_{([\frac{n}{2}] + 1)},\quad\text{если } n \text{ — нечётное} \\
+    \frac{1}{2}(X_{(\frac{n}{2})} + X_{(\frac{n}{2} + 1)}),\quad
+    \text{если } n \text{ — чётное}
+\end{cases}$
+
+Выборочная $\alpha$-квантиль: $\gamma_\alpha = X_{([\alpha n)] + 1}$. Здесь $0 < \alpha < 1$ 
+и $\alpha \neq \frac{1}{2}$.
+
+Рассмотрим независимые одинаково распределённые двумерные векторы
+$(X_1, Y_1), \ldots, (X_n, Y_n)$ с генеральной функцией распределения $F(x, y)$.
+Мы можем рассмотреть две одномерные выборки: $X_1, \ldots, X_n \sim G(x)$ и
+$Y_1, \ldots, Y_n \sim H(y)$.
+Тогда величина $\ol{\cov}(X, Y) = \frac{1}{n} \sum\limits_{i=1}^n X_iY_i - \ol X \ol Y =
+\frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)(Y_i - \ol Y)$ называется ковариацией выборки,
+а $R(X, Y) = \frac{\ol{\cov}(X, Y)}{\sqrt{s_X^2s_Y^2}}$ — выборочным коэффициентом 
+корреляции.
+
+\begin{enumerate}
+    \item Если $Eg_n = \alpha$, то $g_n$ называется
+    \emph{несмещённой оценкой}. Если $Eg_n \underto{n \to \infty} \alpha$, то $g_n$ 
+    называется \emph{асимптотической несмещённой} оценкой.
+    \item Если $g_n \overto{P} \alpha$, то $g_n$ — \emph{состоятельная} 
+    оценка.
+    \item Если
+    $\sqrt n \frac{g_n - \alpha}{\Delta} \overto{\mathrm d} N(0, 1)$, то $g_n$ — 
+    \emph{асимптотическая нормальная} оценка с дисперсией $\Delta^2$
+\end{enumerate}
+
+\begin{theorem}[Гливенко]
+    Выборочная (эмпирическая) функция распределения $\ol F(x)$ является
+    несмещённой, состоятельной
+    и асимптотически нормальной оценкой для генеральной функции распределения $F(x)$.
+\end{theorem}
+\begin{proof}
+    Вспомни, что выборочная функция распределения может быть записана как
+    $\ol F(x) = \frac{1}{n}\sum\limits_{i=1}^n \mb I_{(-\infty, x)} (X_i)$.
+    Заметим, что $\mb I_{(-\infty, x)} (X_1), \mb I_{(-\infty, x)} (X_2), \ldots,
+    \mb I_{(-\infty, x)} (X_n)$ — независимые одинаковы распределённые случайные величины.
+    $$
+    \mb I_{(-\infty, x)} (X_i) =
+    \begin{cases}
+        0,\quad X_i \geqslant x \\
+        1,\quad X_i < x
+    \end{cases}
+    $$
+    $$
+    P\Big(\mb I_{(-\infty, x)} (X_i) = 1\Big) = P(X_i < x) = F(x)
+    $$
+    $$
+    E\ol F(x) = E\frac{1}{n}\sum\limits_{i=1}^n\mb I_{(-\infty, x)} (X_i) =
+    \frac{1}{n}\sum\limits_{i=1}^nE\mb I_{(-\infty, x)} (X_i) = F(x)
+    $$
+    Это означает несмещённость. По закону больших чисел Хинчина:
+    $$
+    \frac{1}{n}\sum\limits_{i=1}^n\mb I_{(-\infty, x)} (X_i) \overto{\mathrm P} F(x)
+    $$
+    Это означает состоятельность. По центральной предельной теореме Леви:
+    $$
+    \frac{\sum\limits_{i=1}^n \mb I_{(-\infty, x)} (X_i) - nF(x)}{\sqrt{(1 - F(x))F(x)n}}
+    \overto{\mathrm d} N(0, 1)
+    $$
+    $$
+    \frac{\sqrt n (\ol F(x) - F(x))}{\sqrt{F(x)(1 - F(x)}} \overto{\mathrm d} N(0, 1)
+    $$
+    Это означает асимптотическую нормальность.
+\end{proof}
+    
+Пусть $a = EX_i$ для некоторой выборки $X_1, \ldots, X_n$ с генеральной функцией 
+распределения $F(x)$. Мы хотим оценить $a$.
+
+\begin{theorem}[Свойства выборочного среднего]
+\mbox{}
+    \begin{enumerate}
+        \item Выборочное среднее $\ol X$ — несмещённая оценка для матожидания $a$.
+        \item $\ol X$ — состоятельная оценка для $a$.
+        \item Если существует второй момент $EX_i^2$, то $\ol X$ — асимптотическая оценка для
+        $a$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item $E\ol X = E\frac{1}{n}\sum\limits_{i=1}^n X_i =
+        \frac{1}{n} \sum\limits_{i=1}^n EX_i = a$
+        \item По закону больших чисел Хинчина
+        $\frac{1}{n}\sum\limits_{i=1}^n X_i \overto{\mathrm P} a$
+        \item По центральной предельной теореме Леви
+        $\frac{\sum\limits_{i=1}^n X_i - na}{\sqrt{n (EX_i^2 - (EX_i)^2}}
+        \overto{\mathrm d} N(0, 1)$
+    \end{enumerate}
+\end{proof}
+
+Попробуем оценить дисперсию $\sigma^2 = DX_i$.
+Вспомним, что $s^2 = \frac{1}{n} \sum\limits_{i=1}^n (X_i - \ol X)^2 =
+\frac{1}{n}\sum\limits_{i=1}^n X_i^2 - \ol X^2$
+
+\begin{theorem}[Свойства оценки $s^2$]
+\mbox{}
+    \begin{enumerate}
+        \item $s^2$ — инвариантная относительно сдвига выборки оценка.
+        \item $s^2$ — асимптотическая несмещённая оценка для $\sigma^2$ (которая смещённая).
+        \item $s^2$ — состоятельная оценка для $\sigma^2$.
+        \item Если существует $EX_i^4$, то $s^2$ — асимптотическая нормальная оценка с 
+        дисперсией $EX_i^4 - (EX_i^2)^2$ для $\sigma^2$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item Рассмотрим сдвиг $X_1 + c, \ldots, X_n + c$.
+        $$
+        s_c^2 = \frac{1}{n}\sum\limits_{i=1}^n(X_i + c - (\ol X + c))^2 =
+        \frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^2 = s^2
+        $$
+        Поэтому далее разумно предположить, что $EX_i = 0$
+        \item
+        $$
+        Es^2 = E\frac{1}{n}\sum\limits_{i=1}^n X_i^2 - E(\ol X)^2 =
+        \frac{1}{n}\sum\limits_{i=1}^n EX_i^2 =
+        E\bigg(\frac{1}{n}\sum\limits_{i=1}^n X_i\bigg)^2 =
+        $$
+        $$
+        \sigma^2 - \frac{1}{n^2} \bigg(\underbrace{E\sum\limits_{i \neq j}X_iX_j}_
+        {= \sum\limits_{i \neq j} EX_iEX_j = 0} +
+        E\sum\limits_{i=1}^n X_i^2\bigg) = \sigma^2 - \frac{1}{n}\sigma^2 =
+        \frac{n - 1}{n}\sigma ^2 \underto{n \to \infty} \sigma^2
+        $$
+        \item Возьмём $\varepsilon > 0$.
+        $$
+        P(|s^2 - \sigma^2| \geqslant \varepsilon) =
+        P\bigg(\bigg|\frac{1}{n}\sum\limits_{i=1}^n X_i^2 - \ol X^2 - \sigma^2\bigg|
+        \geqslant \varepsilon \bigg) \leqslant
+        P\bigg(\bigg|\frac{1}{n}\sum\limits_{i=1}^n X_i^2 - \sigma^2\bigg|
+        \geqslant \frac{\varepsilon}{2} \bigg) +
+        P\bigg(\ol x^2 \geqslant \frac{\varepsilon}{2}\bigg)
+        $$
+        По закону больших чисел Хинчина первое слагаемое в правой части неравенства стремится
+        к нулю при $n \to \infty$.
+        $$
+        P\bigg(\ol X^2 \geqslant \frac{\varepsilon}{2}\bigg) \leqslant
+        \frac{E \ol X^2}{\frac{\varepsilon}{2}} =
+        \frac{2E\bigg(\frac{1}{n}\sum\limits_{i=1}^n X_i\bigg)^2}{\varepsilon} =
+        \frac{2n\sigma^2}{\varepsilon n^2} \underto{n \to \infty} 0
+        $$
+        Состоятельность доказана.
+        \item
+        $$
+        \sqrt{n}(s^2 - \sigma^2) =
+        \sqrt{n}\bigg(\frac{1}{n} \sum\limits_{i=1}^n X_i^2 - \ol X^2 - \sigma^2\bigg) =
+        \frac{\sum\limits_{i=1}^n X_i^2 - n\sigma^2}{\sqrt n} - \sqrt{n}\ol X^2
+        $$
+        Первое слагаемое по центральной предельной теореме Леви стремится к нормальному
+        закону, а второе — к нулю.
+        $$
+        P(\sqrt n \ol X^2 > \varepsilon) \leqslant
+        \frac{n^{\frac{3}{2}}\sigma^2}{n^2\varepsilon} \underto{n \to \infty} 0
+        $$
+    \end{enumerate}
+\end{proof}
+\begin{lemma}
+    Пусть $\Delta_n = \xi_n + \eta_n$, $\xi_n \overto{\mathrm d} \xi$,
+    $\eta_n \overto{\mathrm P} 0$. Тогда $\Delta_n \overto{\mathrm d} \xi$.
+\end{lemma}
+\begin{proof}
+    $$
+    |f_{\Delta_n}(t) - f_\xi(t)| = |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi} \pm Ee^{it\xi^n}|
+    \leqslant |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi_n}| +
+    \underbrace{|Ee^{it\xi_n} - Ee^{it\xi}|}_{\to 0}
+    $$
+    $$
+    |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi_n}| = |Ee^{it\xi_n}(e^{it\eta_n} - 1)| \leqslant
+    E|e^{it\eta_n} \ldots
+    $$
+\end{proof}
+
+Предположим, что у нас есть выборка $X_1, \ldots, X_n$ с генеральной функцией распределения
+$F(x, \theta)$, где $\theta$ — какой-то параметр, который мы хотим оценить.
+
+Рассмотрим понятие \emph{доверительного интервала}.
+\begin{definition}
+    Пусть $g_n$, $h_n$ — статистики, причём $P(g_n < h_n) = 1$. Пусть $0 < \alpha \ll 1$.
+    Если $P(g_n < \theta < h_n) \geqslant 1 - \alpha$, то $(g_n, h_n)$ называется
+    доверительным интервалом для параметра $\theta$ с доверительной вероятностью $\theta$.
+\end{definition}
+
+Геометрический смысл доверительного интервала заключается в том, что мы покрываем с заданной
+вероятностью $\alpha$ точку $\theta$ этим интервалом.
+
+Пусть $\xi_0, \xi_1, \ldots, \xi_n$ — независимые одинаково распределённые случайные 
+величины, причём $\xi_i \in N(0, 1)$ для всех $i$.
+Пусть $\chi_n^2 = \sum\limits_{i=1}^n \xi_i^2$. Такую случайную величину называют 
+\emph{распределённой по закону хи-квадрат с $n$ степенями свободы}.
+
+Рассмотрим $T_n = \frac{\xi_0}{\sqrt{\frac{1}{n}\sum\limits_{i=1}^n \xi_i^2}}$. Говорят, что
+эта случайная величина распределена по закону Стьюдента с $n$ степенями свободы. При $n=1$
+мы получим распределение Коши, а при $n \to \infty$ $T_n$ будет стремиться к стандартному
+нормальному закону.
+
+\begin{lemma}[Фишера]
+    Пусть $X_1, \ldots, X_n \sim N(a, \sigma^2)$ — случайная выборка. Тогда:
+    \begin{enumerate}
+        \item $\sqrt{n}\frac{\ol X - a}{\sigma} \in N(0, 1)$
+        \item $\ol X$, $s^2$ — независимые случайные величины.
+        \item $\frac{ns^2}{\sigma^2}$ распределена по закону хи-квадрат с $n-1$ степенями 
+        свободы.
+        \item $\sqrt{n - 1}\frac{\ol X - a}{\sigma}$ имеет распределение Стьюдента с
+        $n - 1$ степенями свободы
+    \end{enumerate}
+\end{lemma}
+
+\begin{examples}
+\mbox{}
+    \begin{enumerate}
+        \item Построение доверительного интервала для $a$, когда $\sigma^2$ известно.
+        Воспользуемся первым утверждением вышеприведённой леммы. Возьмём число
+        $\alpha$: $0 < \alpha \ll 1$. С помощью таблиц стандартного нормального закона
+        возьмём $z_{1 - \frac{\alpha}{2}}$ такое, что функция распределения
+        $\Phi(z_{1 - \frac{\alpha}{2}} = 1 - \frac{\alpha}{2}$.
+        $$
+        P\bigg(-z_{1 - \frac{\alpha}{2}} < \sqrt{n}\frac{\ol X - a}{\sigma} <
+        z_{1 - \frac{\alpha}{2}}\bigg) = 1 - \alpha
+        $$
+        $$
+        P\bigg(\ol X - \frac{\sigma z_{1 - \frac{\alpha}{2}}}{\sqrt n} < a <
+        \ol X + \frac{\sigma z_{1 - \frac{\alpha}{2}}}{\sqrt n}\bigg) = 1 - \alpha
+        $$
+        То есть, доверительный интервал равен
+        $\Big(\ol X - \frac{\sigma z_{1 - \frac{\alpha}{2}}}{\sqrt n},
+        \ol X + \frac{\sigma z_{1 - \frac{\alpha}{2}}}{\sqrt n}\Big)$.
+        \item Построение доверительного интервала для $a$, когда $\sigma^2$ неизвестно.
+        С помощью таблиц распределения Стьюдента с $n-1$ степенями свободы найдём
+        $z_{1 - \frac{\alpha}{2}}$ такое, что функция распределения
+        $S_{n-1}(z_{1 - \frac{\alpha}{2}}) = 1 - \frac{\alpha}{2}$.
+        $$
+        P\bigg(-z_{1 - \frac{\alpha}{2}} < \sqrt{n-1}\frac{\ol X - a}{s} <
+        z_{1 - \frac{\alpha}{2}}\bigg) = 1 - \alpha
+        $$
+        $$
+        P\bigg(\ol X - \frac{s z_{1 - \frac{\alpha}{2}}}{\sqrt{n-1}} < a <
+        \ol X + \frac{s z_{1 - \frac{\alpha}{2}}}{\sqrt{n-1}}\bigg) = 1 - \alpha
+        $$
+        Доверительный интервал: $\Big(\ol X - \frac{s z_{1 - \frac{\alpha}{2}}}{\sqrt{n-1}},
+        \ol X + \frac{s z_{1 - \frac{\alpha}{2}}}{\sqrt{n-1}}\Big)$. Заметим, что
+        длина этого интервала $\frac{2sz_{1 - \frac{\alpha}{2}}}{\sqrt{n-1}}
+        \overto{\mathrm P} 0$ при $n \to \infty$.
+    \end{enumerate}
+\end{examples}
+
+\section{Методы построения оценок для неизвестных параметров}
+
+Мы рассматриваем статистики $X_1, \ldots, X_n$ с генеральной функцией распределения $F(x, \theta)$,
+причём $\theta$ может быть вектором. Мы хотим оценить $\theta$.
+
+\paragraph{Метод моментов}
+    Обозначим через $a_i = \frac{1}{n}\sum\limits_{k=1}^n x_k^i$
+    $i$-й выборочный момент, через $\alpha_i(\theta) = E_\theta X_1^i$.
+    Составим систему и решим её:
+    $$
+    \begin{cases}
+        \alpha_1(\theta) = a_1 \\
+        \ldots \\
+        \alpha_k(\theta) = a_k \\
+    \end{cases}
+    $$
+
+\begin{examples}
+\mbox{}
+    \begin{enumerate}
+        \item Пусть $X_1, \ldots, X_n \sim N(a, \sigma^2)$. Имеем систему:
+        $$
+        \begin{cases}
+            a = \ol X \\
+            \sigma^2 + a^2 = \frac{1}{n}\sum\limits_{i=1}^n X_i^2 \\
+        \end{cases}
+        $$
+        Решив систему, поучим оценку $(\ol X, s^2)$.
+        \item Пусть $X_1, \ldots, X_n \sim U_{[0, a]}$. $\frac{a}{2} = \ol X$, отсюда $a = 2\ol X$.
+    \end{enumerate}
+\end{examples}
+
+\paragraph{Метод максимального правдоподобия}
+        В случае абсолютно непрерывного распределения и $X_1, \ldots, X_n \sim F(x, \theta)$,
+        $p(x, \theta)$ — плотности, будем рассматривать \emph{функцию правдоподобия}:
+        $$
+        L(X_1, \ldots, X_n, \theta) = \prod\limits_{i=1}^n p(X_i, \theta)
+        $$
+        Возьмём $\widetilde{\theta}:$ $L(X_1, \ldots, X_n, \widetilde\theta) \geqslant
+        L(X_1, \ldots, X_n, \theta)\quad \forall \theta$. $\widetilde\theta$ будет оценкой для $\theta$,
+        полученной методом максимального правдопободия.
+        $$
+        \frac{\dif \ln L(X_1, \ldots, X_n, \theta)}{\dif \theta} = 0
+        $$
+        
+        В случае дискретного распределения функция правдоподобия:
+        $$
+        L(X_1, \ldots, X_n, \theta) = \prod\limits_{i=1}^n P_\theta(X = X_i)
+        $$
+        И будем брать $\widetilde\theta$ точкой максимума $L(X_1, \ldots, X_n, \theta)$.
+
+\begin{example}
+        Предположим $X_i \sim U_{[0, a]}$ и оценим $a$.
+        $$
+        p(x, a) = \frac{1}{a}\mb I_{[0, a]}(x)
+        $$
+        $$
+        L(X_1, \ldots, X_n, a) = \frac{1}{a^n}\prod\limits_{i=1}^n\mb I_{[0, a]}(X_i)
+        $$
+        Построим вариционный ряд, то есть упорядочим $X_i$: $X_{(1)}, \ldots, X_{(n)}$.
+        Тогда:
+        $$
+        L(X_1, \ldots, X_n, a) = \frac{1}{a^n}\prod\limits_{i=1}^n\mb I_{[0, a]}(X_{(i)})
+        $$
+        Таким образом, $L=0$ при $a < X_{(n)}$, в ней $L=X_{(n)}$, после
+        чего c увеличением $a$ $L$ убывает, отсюда $\widetilde a = X_{(n)}$.
+        
+        Заметим, что полученная оценка отличается от той, что мы получили методом моментов.
+\end{example}
+
+Пусть $\widetilde g_1, \widetilde g_2$ — оценки параметра $\theta$. Пусть мы получили:
+$$
+E(\widetilde g_1 - \theta)^2 \geqslant E(\widetilde g_2 - \theta)^2\quad \forall \theta
+$$
+Это означает, что оценка $\widetilde g_2$ более эффективна.
+
+\begin{exercise}
+    Предположим $X_1, \ldots, X_n \sim p(x, \alpha) = \frac{1}{2} e^{-|x-\alpha|}$.
+    Оценить $\alpha$ методами моментов и максимального правдободобия. Отметим, что сложность
+    последнего в данном случае заключается в том, что приравнивание производной к нулю не работает,
+    так как функция не дифференцируема в этой точке.
+\end{exercise}
+
+\section{Проверка статистических гипотез}
+
+Как обычно, рассматриваем случайную выборку $X_1, \ldots, X_n$ с генеральной функцией распределения
+$F$. Пусть $\mathfrak F$ — некоторое множество функций распределения, представимое в виде 
+объединения двух непересекающихся подмножеств $\mathfrak F_0, \mathfrak F_1:$
+$\mathfrak F_0 \cap \mathfrak F_1 = \mathfrak F$, $\mathfrak F_0 \cap \mathfrak F_1 = \varnothing$
+Может возникнуть две гипотезы: $H_0 = \{F \in \mathfrak F_0\}$ или $H_1 = \{F \in \mathfrak F_1\}$.
+Например, $H_0$ (<<нулевая гипотеза>>) могут быть такого вида:
+\begin{itemize}
+    \item $F \in N$;
+    \item $F \in N(0, 4)$;
+    \item $F$ таково, что математическое ожидание положительно.
+\end{itemize}
+
+Методология проверки гипотез такова: задаётся некоторое близкое к нулю положительное $\alpha$. На
+практике это может быть $\alpha = 0.1, \alpha = 0.05, \alpha = 0.01, \ldots$
+
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        & Верна гипотеза $H_0$ & Верна гипотеза $H_1$ \\ \hline
+        Принята гипотеза $H_0$ & Верное решение & Ошибка II рода \\ \hline
+        Принята гипотеза $H_1$ & Ошибка I рода & Верное решение \\ \hline
+    \end{tabular}
+\end{center}
+
+В качестве основной (<<нулевой>>) гипотезы обычно берут ту, для которой вероятность ошибки
+первого рода не превосходит $\alpha$, но при этом вероятность ошибки второго рода минимизируется.
+
+Рассмотрим основные типы задач на проверку гипотез.
+\begin{enumerate}
+    \item Проверка гипотезы согласия. $X_1, \ldots, X_n \sim F$ и $F_0$ — некоторая известная 
+    функция. Берётся $H_0 = \{F = F_0\}$, $H_1 = \{F \neq F_0\}$
+    \item Проверка однородности. $X_1, \ldots, X_n \sim F$, $Y_1, \ldots, Y_n \sim G$. Берётся
+    $H_0 = \{F = G\}$, $H_1 = \{F \neq G\}$.
+    \item Проверка независимости. $(X_1, Y_1), \ldots, (X_n, Y_n) \sim F(x, y)$, где
+    $X_1, \ldots, X_n \sim G(x)$, $Y_1, \ldots, Y_n \sim H(y)$. Берётся
+    $H_0 = \{F(x, y) = G(x)H(y)\}$, $H_1 = \{\exists x_0, y_0:\, F(x_0, y_0) \neq G(x_0)H(y_0)\}$.
+\end{enumerate}
+
+Изучим некоторые инструменты, помогающие проверить гипотезу согласия.
+
+\paragraph{Критерий Колмогорова}
+$$
+\ol F_n(t) = \frac{1}{n}\sum\limits_{i=1}^n \mb I_{(-\infty, t)}(X_i)
+$$
+$$
+D_n = \sup\limits_{t \in \real} \Big| \ol F_n(t) - F_0(t) \Big|
+$$
+
+\begin{theorem}[Колмогорова]
+    Если $H_0$ верна, то $P(\sqrt n D_n < x) \underto{n \to \infty} K(x)$. $K(x)$ — функция
+    распределения Колмогорова.
+\end{theorem}
+
+Алгоритм:
+\begin{enumerate}
+    \item Вычисляем $D_n$.
+    \item По таблицам $K(x)$ находим $z_{1-\alpha}$ такое, что $K(z_{1-\alpha}) = 1 - \alpha$.
+    \item Сравниваем: если $\sqrt n D_n \geqslant z_{1-\alpha}$, то $H_0$ отвергаем; если
+    $\sqrt n D_n < z_{1-\alpha}$, то принимаем.
+\end{enumerate}
+
+\paragraph{Критерий хи-квадрат для проверки гипотезы согласия}
+Разбиваем вещественную прямую на $r$ зон $A_1, \ldots, A_r$ ($5 \leqslant r \leqslant 15$).
+Считаем вероятности $p_k = P_{H_0}(X \in A_k)$.
+Считаем $\nu_k = \sum\limits_{i=1}^n \mb I_{A_k} (X_i)$ — число элементов
+выборки, попавших в зону $k$.
+Построим статистику $\chi_n^2 = \sum\limits_{i=1}^r \frac{(\nu_i - np_i)^2}{np_i}$. Справедлива
+следующая теорема.
+\begin{theorem}[Пирсона]
+    Если $H_0$ верна, то $P(\chi_n^2 < x) \underto{n \to \infty} K_{r-1}(x)$. $K_{r-1}(x)$ —
+    функция закона хи-квадрат с $r-1$ степенью свободы.
+\end{theorem}
+
+Алгоритм:
+\begin{enumerate}
+    \item Вычисляем $\chi_n^2$.
+    \item По таблицам $K_{r-1}(x)$ находим $z_{1-\alpha}$ такое,
+    что $K(z_{1-\alpha}) = 1 - \alpha$.
+    \item Сравниваем: если $\chi_n^2 \geqslant z_{1-\alpha}$, то $H_0$ отвергаем; если
+    $\chi_n^2 < z_{1-\alpha}$, то принимаем.
+\end{enumerate}
+
+\begin{remark}
+    В случае, когда несколько критериев дают принятие гипотезы согласия, но один не даёт,
+    мы эту гипотезу отвергаем.
+\end{remark}
+
+\paragraph{Критерий хи-квадрат для проверки независимости}
+
+\begin{theorem}
+    $\ldots$
+\end{theorem}
+
+Пусть имеется случайная выборка $X_1, \ldots, X_n$ и вариационный ряд $X_{(1)}, \ldots, X_{(n)}$.
+Пусть $R_i$ — место, которое занимает величина $X_i$ в вариационном ряду, называемое \emph{рангом}.
+Итак по имеющейся выборке мы можем построить вариационный ряд и вектор рангов $(R_1, \ldots, R_n)$.
+Очевидно, что мы также можем восстановить выборку по её вариационному ряду и вектору рангов.
+Оказывается, для решения многих задач достаточно знать только вектор рангов.
+
+\paragraph{Критерий Вилкоксона для проверки однородности}
+
+$X_1, \ldots, X_n \sim F$, $Y_1, \ldots, Y_n \sim G$. Будем проверять гипотезы
+$H_0 = \{F = G\}$, $H_1 = \{F \neq G\}$. Объединим выборки $X_i$ и $Y_j$ и построим ранги $R_i$
+только для $X_i$. Возьмём $w_{n, m} = \sum\limits_{i=1}^n R_i$.
+
+\begin{theorem}
+    Если $H_0$ верна, то:
+    \begin{enumerate}
+        \item $Ew_{n,m} = \frac{n(n+m+1)}{2}$
+        \item $Dw_{n,m} = \frac{n(n+m+1)}{12}$
+        \item $P\bigg(\frac{w_{n,m} - Ew_{n,m}}{\sqrt{Dw_{n,m}}} < x\bigg)
+        \underto{n \to \infty,\, m \to \infty} \Phi(x)$
+    \end{enumerate}
+\end{theorem}
+
+Алгоритм:
+\begin{enumerate}
+    \item По $\alpha$ находим $z_{1-\frac{z}{2}}$ такое, что $\Phi(z_{1-\frac{z}{2}}) 
+    \frac{\alpha}{2}$ $\ldots$ %пропущено%
+\end{enumerate}
+
+\paragraph{Критерий Спирмена для проверки независимости}
+Пусть есть выборка $(X_1, Y_1), \ldots, (X_n, Y_n)$, причём $R_i$ — ранг $X_i$, $S_i$ — ранг
+$Y_i$.
+$$
+d_n^2 = \sum\limits_{i=1}^n(R_i - S_i)^2
+$$
+$$
+r_n = 1 - \frac{6d_n^2}{n(n-1)(n+1)}
+$$
+$r_n$ называется \emph{коэффициентом корреляции Спирмена}. Он действительно является коэффициентом
+корреляции.
+
+\begin{theorem}
+    Если $H_0$ верна, то $P(\sqrt{n-1} r_n < x) \underto{n \to \infty} \Phi(x)$;
+\end{theorem}
+
+Если $|\sqrt{n-1}r_n| \geqslant z_{1-\frac{\alpha}{2}}$, то отвергаем $H_0$.
 
 \end{document}
