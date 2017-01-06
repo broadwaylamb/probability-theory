@@ -75,6 +75,210 @@
 
 \pagebreak
 
+\section{Случайные события. Вероятность}
+
+Рассмотрим эксперимент с подбрасыванием монеты. Мы не можем угадать следующий исход, но легко можем
+перечислить все исходы: это выпадение <<орла>> ($O$) или <<решки>> ($Р$). В случае с подбрасыванием
+кубика это будут числа от $1$ до $6$; для двух кубиков это упорядоченные пары таких чисел. Во
+всех этих случаях мы имеем дело с конечным числом исходов.
+Мы теперь можем рассмотреть эксперимент с подбрасыванием монеты, который прекращается как только
+выпадает <<орёл>>. Множество исходов будет иметь вид: $\{О, РО, РРО, \ldots, Р\ldotsРО, \ldots\}$.
+Ясно, что это множество счётно. Примером несчётного множества исходов служит выбор случайной точки
+на отрезке $[0, 1]$.
+
+Условимся обозначать $\Omega$ множество всех исходов, а $\omega$ — исход эксперимента, или
+\emph{элементарное событие}.
+
+Пусть на $\Omega$ определена система подмножеств $\mathfrak F$, являющаяся сигма-алгеброй. Элемент
+$A \in \mathfrak F$ назовём \emph{случайным событием}. Будем говорить, что случайное событие
+произошло, если $\omega \in A$.
+
+\begin{remark}
+    Обычно в случае конечного или счётного числа исходов в качестве $\mathfrak F$ выбирается 
+    множество всех подмножеств $\Omega$.
+\end{remark}
+
+\begin{definition}
+    Пусть $P$ — функция, заданная на $\mathfrak F$ и действующая в $\real$, а также выполнены 
+    условия:
+    \begin{enumerate}
+        \item $\forall A \in \mathfrak F \quad P(A) \geqslant 0$.
+        \item $P(\Omega) = 1$.
+        \item Для $A_1, A_2, A_3, \ldots \in \mathfrak F$ — не более чем счётного набора
+        событий, причём попарно непересекающихся, выполнено
+        $P\Big(\bigcup\limits_i A_i\Big) = \sum\limits_i P(A_i)$.
+    \end{enumerate}
+    Тогда $P$ называется \emph{вероятностью}, а указанные условия — \emph{аксиомами вероятности}.
+\end{definition}
+
+\begin{remark}
+    Вероятность является счётно-аддитивной мерой на $\mathfrak F$.
+\end{remark}
+
+\begin{example}
+    Вспомним подбрасывание монетки: $\Omega = \{О, Р\}$,
+    $\mathfrak F = \{\{О\}, \{Р\}, \{О, Р\}, \varnothing\}$. Мы можем сопоставить каждому элементу
+    $\mathfrak F$ число разными способами:
+    $$
+    \begin{cases}
+        \{О\} \mapsto \frac{1}{2} \\
+        \{Р\} \mapsto \frac{1}{2} \\
+        \{О, Р\} \mapsto 1        \\
+        \varnothing \mapsto 0     \\
+    \end{cases}
+    \text{ или }
+    \begin{cases}
+        \{О\} \mapsto \frac{1}{3} \\
+        \{Р\} \mapsto \frac{2}{3} \\
+        \{О, Р\} \mapsto 1        \\
+        \varnothing \mapsto 0     \\
+    \end{cases}
+    $$
+    Разумеется, то какая вероятность будет правильной, зависит от монетки.
+\end{example}
+
+\begin{definition}
+    Пусть $A$ — случайное событие. Событие $\ol A = \Omega \backslash A$ — называется
+    \emph{обратным} к $A$.
+\end{definition}
+\begin{definition}
+    Если $A, B \in \mathfrak F$ — случайные события и $A \cap B = \varnothing$, то $A, B$
+    называются \emph{несовместными}. Это означает, что они не могут произойти одновременно.
+\end{definition}
+\begin{definition}
+    $\Omega$ называется \emph{достоверным событием}, а
+    $\ol \Omega = \varnothing$ — \emph{невозможным событием}.
+\end{definition}
+
+\begin{definition}
+    Тройка $(\Omega, \mathfrak F, P)$ называется \emph{вероятностным пространством}.
+\end{definition}
+
+Вероятностное пространство представляет собой математическую модель, с помощью которой мы
+описываем эксперимент.
+
+\begin{definition}
+    Пусть имеется не более чем счётный набор попарно непересекающихся событий событий
+    $A_1, A_2, A_3, \ldots \in \mathfrak F$, $A_i \cap A_j = \varnothing$ ($i \neq j$),
+    $\bigcup\limits_i A_i = \Omega$. Тогда этот набор называется \emph{полной системой событий}.
+    То есть, полная система событий образует разбиение $\Omega$.
+\end{definition}
+\begin{definition}
+    Если $A, B \in \mathfrak F$, то $A \cup B$ называется \emph{суммой событий}, а
+    $A \cap B = AB$ — \emph{произведением событий}.
+\end{definition}
+
+\section{Свойства вероятности}
+
+\begin{proposition}
+    Любая вероятность $P: \mathfrak F \to \real$ удовлетворяет следующим свойствам:
+    \begin{enumerate}
+        \item $\forall A \in \mathfrak F\quad P(\ol A) = 1 - P(A)$.
+        \item $\forall A \in F \quad 0 \leqslant P(A) \leqslant 1$.
+        \item $P(\varnothing) = 0$.
+        \item Если $A, B \in \mathfrak F$, то $P(A \cup B) = P(A) + P(B) - P(AB)$.
+        \item Для конечного набора $A_1, A_2, \ldots, A_m \in \mathfrak F$ верно:
+        $$
+        P\bigg(\bigcup\limits_{i=1}^m A_i\bigg) = \sum\limits_{i=1}^m P(A_i) -
+        \sum\limits_{i \neq j} P(A_i \cap A_j) +
+        \sum\limits_{i \neq j \neq k} P(A_i \cap A_j \cap A_k) - \ldots +
+        (-1)^{m+1} P\bigg(\bigcap\limits_{i=1}^m A_i\bigg)
+        $$
+        \item Если $A, B \in \mathfrak F$ и $A \subset B$, то $P(A) \leqslant P(B)$.
+        \item Если $A_1, A_2, A_3 \ldots \in \mathfrak F$, то
+        $P\Big(\bigcup\limits_i A_i\Big) \leqslant \sum\limits_i P(A_i)$.
+        \item Если $A_1, A_2, A_3, \ldots \in \mathfrak F$ — не более чем счётный набор событий,
+        причём $A_1 \subset A_2 \subset A_3 \subset \ldots$, и $\bigcup\limits_i A_i = A$,
+        то $P(A) = \lim\limits_{n \to \infty} P(A_n)$.
+        \item Если $B_1, B_2, B_3, \ldots \in \mathfrak F$ — не более чем счётный набор событий,
+        причём $B_1 \supset B_2 \supset B_3 \supset \ldots$, и $\bigcap\limits_i B_i = B$,
+        то $P(B) = \lim\limits_{n \to \infty} P(B_n)$.
+    \end{enumerate}
+    
+    Последние два свойства утверждают о непрерывности вероятности.
+\end{proposition}
+\begin{proof}
+\mbox{}
+    \begin{enumerate}
+        \item Заметим, что $A$ и $\ol A$ несовместны и $A \cup \ol A = \Omega$. По второй аксиоме
+        вероятности $P(\Omega) = 1 = P(A \cup \ol A)$, откуда по третьей аксиоме
+        $1 = P(A) + P(\ol A)$.
+        \item $P(\ol A) = 1 - P(A) \geqslant 0$ — из первой аксиомы.
+        \item Поскольку $\ol \Omega = \varnothing$, то $P(\varnothing) = 1 - P(\Omega) = 1-1 = 0$.
+        \item Рассмотрим $A\cup B = (A \cap \ol B) \cup (\ol A \cap B) \cup (A \cap B)$. Легко
+        видеть, что слагаемые попарно несовместны. Отсюда:
+        $$
+        P(A\cup B) = P(A\cap \ol B) + P(\ol A \cap B) + P(A\cap B) + P(A\cap B) - P(A\cap B)
+        $$
+        Здесь мы прибавили и вычли $P(A\cap B)$. Так как $A \cap \ol B$ и $A \cap B$ несовместны,
+        то по третьей аксиоме будет $P(A\cup B) = P(A) + P(B) - P(A\cap B)$.
+        \item \emph{Упражнение}.
+        \item Разложим $B$ как $B = A \cup (B \cap \ol A)$.
+        Заметим, что $A$ и $B \cap \ol A$ несовместны. Тогда
+        $P(B) = P(A) + P(B\cap \ol A) \geqslant P(A)$ (так как $P(B\cap \ol A) \geqslant 0$).
+        \item $\bigcup\limits_i A_i = A_1 \cup (\ol A_1 \cap A_2) \cup
+        (\ol A_1 \cap \ol A_2 \cap A_3) \cup \ldots$ — сумма попарно несовместных событий.
+        Отсюда:
+        $$
+        P\bigg(\bigcup\limits_i A_i\bigg) =
+        P(A_1) + P(\underbrace{\ol A_1 \cap A_2}_{\subset A_2}) +
+        P(\underbrace{\ol A_1 \cap \ol A_2 \cap A_3}_{\subset A_3}) + \ldots
+        $$
+        По предыдущему свойству получаем $P\Big(\bigcup\limits_i A_i\Big) \leqslant
+        P(A_1) + P(A_2) + P(A_3) + \ldots$
+        \item Рассмотрим $A = \bigcup\limits_{i=1}^n A_i \cup \bigcup\limits_{i > n} A_i =
+        A_n \cup \bigcup\limits_{i > n}A_i =
+        A_n \cup (\ol A_n \cap A_{n+1}) \cup (\ol A_{n+1} \cap A_{n+1}) \cup \ldots$
+        Отсюда $P(A) = P(A_n) + \sum\limits_{k=n}^\infty P(\ol A_k \cap A_{k+1})$. Так как
+        $P(A) \leqslant 1$, то можно утверждать, что ряд сходится и
+        $\sum\limits_{k=n}^\infty P(\ol A_k \cap A_{k+1}) \underto{n \to \infty} 0$.
+        \item Рассмотрим $\ol B_1 \subset \ol B_2 \subset \ol B_3 \subset \ldots$ Заметим, что
+        $\ol B = \bigcup\limits_i \ol B_i$. По предыдущему свойству
+        $P(\ol B) = \lim\limits_{n \to \infty} P(\ol B_n)$ и
+        $1 - P(B) = \lim\limits_{n \to \infty} (1 - P(B_n)) =
+        1 - \lim\limits_{n \to \infty} P(B_n)$.
+    \end{enumerate}
+\end{proof}
+
+\section{Классическое определение вероятности. Схема равновозможных исходов}
+
+Рассмотрим вероятностное пространство некоторого эксперимента: $(\Omega, \mathfrak F, P)$.
+Пусть $\Omega = \{\omega_1, \ldots, \omega_n\}$. Введём следующее предположение:
+$P(\{\omega_1\}) = \ldots = P(\{\omega_n\})$. Такую ситуацию будем называть
+\emph{схемой равновозможных исходов}. Тогда:
+$$
+1 = P(\Omega) = P\bigg(\bigcup\limits_{i=1}^n \{\omega_i\}\bigg) =
+\sum\limits_{i=1}^n P(\{\omega_i\}) = n \cdot P(\{\omega_j\})\quad \forall j=1\ldots n
+$$
+Мы воспользовались тем, что элементарные события, конечно, попарно несовместны,
+и получили, что $P(\{\omega_j\}) = \frac{1}{n}$.
+
+Рассмотрим теперь событие $A \in \mathfrak F$, $A = \{\omega_{i_1}, \ldots, \omega_{i_k}\}$,
+$k \leqslant n$. Тогда:
+$$
+P(A) = \sum\limits_{j=1}^k P(\{\omega_{i_j}\}) = \frac{k}{n}
+$$
+
+Таким образом мы получили формулу классического определения вероятности:
+$$
+P(A) = \frac{\text{число исходов, благоприятствующих событию } A}
+{\text{число всех возможных исходов}}
+$$
+
+\begin{example}
+    Представим, что мы одновременно подбрасываем два кубика, которые будем считать честными:
+    $\Omega = \{ (i, j)\,|\, 1 \leqslant i,j \leqslant 6\}$. Рассмотрим событие $A$:
+    $$
+    A = \{\text{сумма выпавших очков больше или равна }10\}
+    $$
+    $$
+    P(A) = \frac{6}{36} = \frac{1}{6}
+    $$
+\end{example}
+\begin{remark}
+    События $\{\text{сумма очков равна } 2\}$ и $\{\text{сумма очков равна } 3\}$ не равновероятны.
+\end{remark}
+
 \section{Условные вероятности}
 
 Пусть у нас есть вероятностное пространство $(\Omega, \mathfrak{F}, P)$ и два случайных 
@@ -108,7 +312,6 @@
         $$
         = \sum\limits_i \frac{P(B\cap A_i)}{P(B)} = \sum\limits_i P_B(A_i)
         $$
-        
     \end{enumerate}
 \end{proof}
 \begin{corollary}
