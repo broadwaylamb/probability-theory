@@ -611,7 +611,7 @@ $$
 \end{lemma}
 \begin{lemma}\label{laplacetheoremlemma2}
     $$
-    \ln(1+x) = x - \frac{x^2}{2} + \theta x^3,\text{, где } |\theta| \leqslant 3
+    \ln(1+x) = x - \frac{x^2}{2} + \theta x^3\text{, где } |\theta| \leqslant 3
     \quad\forall |x| < \frac{1}{2}
     $$
 \end{lemma}
@@ -619,10 +619,13 @@ $$
     По формуле Бернулли:
     $$
     P_n(k) = \frac{n!}{k!(n-k)!}p^k q^{n-k} =
-    \frac{n^n e^{-n}\sqrt{2\pi n} (1 + o(1))}{k^k e^{-k} \sqrt{2\pi k} (1 + o(1))
-    (n-k)^{n-k} e^{-n+k}\sqrt{2\pi (n-k)}(1 + o(1))}
     $$
-    Но это верно при $b \to \infty$, $k \to \infty$, $n-k \to \infty$.
+    $$
+    =
+    \frac{n^n e^{-n}\sqrt{2\pi n} (1 + o(1))}{k^k e^{-k} \sqrt{2\pi k} (1 + o(1))
+    (n-k)^{n-k} e^{-n+k}\sqrt{2\pi (n-k)}(1 + o(1))} p^kq^{n-k}
+    $$
+    Но это верно при $n \to \infty$, $k \to \infty$, $n-k \to \infty$.
     $$
     k = np + x_{n,k}\sqrt{npq} \underto{n \to \infty} \infty
     $$
@@ -631,45 +634,48 @@ $$
     $$
     Продолжая вычисления:
     $$
-    P_n(k) = (\frac{k}{np})^{-k-\frac{1}{2}}(\frac{n-k}{nq})^{-n+k-\frac{1}{2}}
+    P_n(k) = \bigg(\frac{k}{np}\bigg)^{-k-\frac{1}{2}}\bigg(\frac{n-k}{nq}\bigg)^{-n+k-\frac{1}{2}}
     \frac{1}{\sqrt{npq}}\frac{1}{\sqrt{2\pi}}(1 + o(1))
     $$
     Пусть $\sqrt{npq}P_n(k) = T_{n,k}$. Тогда:
     $$
-    T_{n,k} = (\frac{k}{np})^{-k-\frac{1}{2}}(\frac{n-k}{nq})^{-n+k-\frac{1}{2}}
+    T_{n,k} = \bigg(\frac{k}{np}\bigg)^{-k-\frac{1}{2}}
+    \bigg(\frac{n-k}{nq}\bigg)^{-n+k-\frac{1}{2}}
     \frac{1}{\sqrt{2\pi}}(1 + o(1))
     $$
     $$
-    \ln T_{n,k} = (-k - \frac{1}{2})\ln \frac{k}{np} + (-n+k-\frac{1}{2})
-    \ln \frac{n-k}{nq} = \ln \frac{1}{\sqrt{2\pi}} + o(1)
+    \ln T_{n,k} = \bigg(-k - \frac{1}{2}\bigg)\ln \frac{k}{np} + \bigg(-n+k-\frac{1}{2}\bigg)
+    \ln \frac{n-k}{nq} + \ln \frac{1}{\sqrt{2\pi}} + o(1)
     $$
     С учётом
     $$
-    \frac{k}{np} = 1 + x\sqrt{\frac{q}{np}}
+    \frac{k}{np} = 1 + x_{n,k}\sqrt{\frac{q}{np}}
     $$
     $$
-    \frac{n-k}{nq} = 1 - x\sqrt{\frac{p}{nq}}
+    \frac{n-k}{nq} = 1 - x_{n,k}\sqrt{\frac{p}{nq}}
     $$
     Применив лемму \ref{laplacetheoremlemma2}, получим:
     $$
-    \ln T_{n,k} = (-np - x\sqrt{npq} - \frac{1}{2})(x\sqrt{\frac{q}{np}} -
-    \frac{x^2}{2}\frac{q}{np} + \theta_1 \frac{x^3 q\sqrt{q}}{np\sqrt{np}}) +
+    \ln T_{n,k} = \bigg(-np - x_{n,k}\sqrt{npq} -
+    \frac{1}{2}\bigg)\bigg(x_{n,k}\sqrt{\frac{q}{np}} -
+    \frac{x_{n,k}^2}{2}\frac{q}{np} + \theta_1 \frac{x_{n,k}^3 q\sqrt{q}}{np\sqrt{np}}\bigg) +
     $$
     $$
-    + (-np + x\sqrt{npq} - \frac{1}{2})(-x\sqrt{\frac{p}{nq}} -
-    \frac{x^2p}{2nq} + \theta_2x^3\frac{p}{nq}\frac{\sqrt{p}}{\sqrt{nq}}) +
+    + \bigg(-np + x_{n,k}\sqrt{npq} - \frac{1}{2}\bigg)\bigg(-x_{n,k}\sqrt{\frac{p}{nq}} -
+    \frac{x_{n,k}^2p}{2nq} + \theta_2x_{n,k}^3\frac{p}{nq}\frac{\sqrt{p}}{\sqrt{nq}}\bigg) +
     \ln \frac{1}{\sqrt{2\pi}} + o(1) =
     $$
     $$
-    = -x\sqrt{npq} + \frac{x^2}{2}q + o(1) - x^2q + x\sqrt{npq} + \frac{x^2}{2}p
-    - x^2p + \ln \frac{1}{\sqrt{2\pi}} =
+    = -x_{n,k}\sqrt{npq} + \frac{x_{n,k}^2}{2}q + o(1) - x_{n,k}^2q +
+    x_{n,k}\sqrt{npq} + \frac{x_{n,k}^2}{2}p
+    - x_{n,k}^2p + \ln \frac{1}{\sqrt{2\pi}} =
     $$
     $$
-    =-\frac{x^2}{2} + \ln \frac{1}{\sqrt{2\pi}} + o(1) 
+    =-\frac{x_{n,k}^2}{2} + \ln \frac{1}{\sqrt{2\pi}} + o(1) 
     $$
     Тогда само $T_{n,k}$ равно:
     $$
-    T_{n,k} = e^{-\frac{x^2}{2}} \frac{1}{\sqrt{2\pi}} e^{o(1)}
+    T_{n,k} = e^{-\frac{x_{n,k}^2}{2}} \frac{1}{\sqrt{2\pi}} e^{o(1)}
     $$
     Отсюда:
     $$
@@ -718,24 +724,25 @@ $$
     $$
     P_{10000}(5000) \approx
     \frac{1}{\sqrt{10000 \cdot \frac{1}{2} \cdot \frac{1}{2}}}\varphi(0) =
-    \frac{1}{50} \cdot 0.39894
+    \frac{1}{50} \cdot 0.39894 \approx 0,00798
     $$
     Если мы захотим подсчитать вероятность того, что <<орёл>> выпадет как минимум 
     4900 раз и как максимум 5100, то необходимо будет применить интегральную
     теорему:
     $$
-    P_{10000}(4900 < \text{число успехов} < 5100) \approx \ldots
+    P_{10000}(4900 < \text{число успехов} < 5100) \approx \Phi(2) - \Phi(-2) = 
+    2\Phi(2) - 1 \approx 0.9544
     $$
 \end{example}
 
 \begin{theorem}[Пуассона]
     Будем рассматривать схему серий испытаний Бернулли. Допустим, первая серия 
     состоит из одного испытания такого, что $p_1 = P_1(У)$. Вторая серия
-    состоит из двух испытаний и $p_2 = P_1(У)$.
-    $n$-я серия испытаний состоит из $n$ испытаний и $p_n = P_1(У)$.
-    (Здесь $P_1(У)$ — вероятность успеха в одном испытании для каждой серии 
+    состоит из двух испытаний и $p_2 = P_2(У)$.
+    $n$-я серия испытаний состоит из $n$ испытаний и $p_n = P_n(У)$.
+    (Здесь $P_i(У)$ — вероятность успеха в одном испытании для каждой серии 
     соответственно.)
-    Пусть также $np_n = \lambda > 0$. Тогда:
+    Пусть также $np_n = \const = \lambda > 0$. Тогда:
     $$
     P_n(k) \underto{n \to \infty} \frac{\lambda^k}{k!}e^{-\lambda}
     $$
@@ -750,9 +757,9 @@ $$
     $$
     $$
     = \frac{\lambda^k}{k!}
-    \underbrace{(1 - \frac{1}{n})\ldots(1 - \frac{k-1}{n})}_{\to 1} \cdot
-    \underbrace{(1 - \frac{\lambda}{n})^n}_{\to e^{-\lambda}}\cdot
-    \underbrace{(1 - \frac{\lambda}{n})^{-k}}_{\to 1}    
+    \underbrace{\bigg(1 - \frac{1}{n}\bigg)\ldots\bigg(1 - \frac{k-1}{n}\bigg)}_{\to 1} \cdot
+    \underbrace{\bigg(1 - \frac{\lambda}{n}\bigg)^n}_{\to e^{-\lambda}}\cdot
+    \underbrace{\bigg(1 - \frac{\lambda}{n}\bigg)^{-k}}_{\to 1}    
     $$
 \end{proof}
 
@@ -767,9 +774,9 @@ $$
 \begin{proof}
     Рассмотрим вероятность:
     $$
-    P_n\big(\big|\frac{k_n}{n} -
-    p\big| > \varepsilon\big) = 1 - P_n(\big|\frac{k_n}{n} -
-    p\big| \leqslant \varepsilon\big) =
+    P_n\bigg(\bigg|\frac{k_n}{n} -
+    p\bigg| > \varepsilon\bigg) = 1 - P_n\bigg(\bigg|\frac{k_n}{n} -
+    p\bigg| \leqslant \varepsilon\bigg) =
     \frac{1}{\sqrt{2\pi}}
     \int\limits_{-\infty}^{+\infty}e^{-\frac{t^2}{2}} \dif t -
     P_n(np - n\varepsilon \leqslant k_n \leqslant n\varepsilon + np) =
