@@ -1699,10 +1699,10 @@ $$
     Число $E\xi^k$, если оно существует, называется $k$-м моментом $\xi$.
     Число $E|\xi|^k$ — абсолютный $k$-й момент $\xi$.
     Число $E(\xi - E\xi)^k$ — центральный $k$-й момент $\xi$.
-    Число $E|\xi - E\xi|^2$ — абсолютный центральный $k$-й момент $\xi$.
+    Число $E|\xi - E\xi|^k$ — абсолютный центральный $k$-й момент $\xi$.
 \end{definition}
 
-Заметим, что все моменты величины $\xi$ существуют или отсутствуют одновременно.
+Заметим, что все $k$-е моменты величины $\xi$ существуют или отсутствуют одновременно.
 
 \begin{proposition}[Свойства моментов]
 \mbox{}
@@ -1718,6 +1718,7 @@ $$
     \end{enumerate}
 \end{proposition}
 \begin{proof}
+\mbox{}
     \begin{enumerate}
         \item Ясно, что $|x|^m \leqslant |x|^n + 1$ для любого $x$. То есть,
         $|\xi|^m \leqslant |\xi|^n + 1$ и
@@ -1728,7 +1729,7 @@ $$
         $E|\xi|^p \leqslant (E|\xi|^q)^\frac{p}{q}$. С учётом
         $\frac{p}{q} + \frac{q - p}{q} = 1$, применим неравенство Гёльдера:
         $$
-        E(\xi|^p \cdot 1|) \leqslant (E|\xi|^q)^\frac{p}{q}\cdot
+        E(|\xi|^p \cdot 1) \leqslant (E|\xi|^{p \cdot \frac{q}{p}})^\frac{p}{q}\cdot
         (E (1^\frac{q}{q - p}))^\frac{q - p}{q} = (E|\xi|^q)^\frac{p}{q}
         $$
     \end{enumerate}
