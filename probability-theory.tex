@@ -774,8 +774,8 @@ $$
     \int\limits_{-\infty}^{+\infty}e^{-\frac{t^2}{2}} \dif t -
     P_n(np - n\varepsilon \leqslant k_n \leqslant n\varepsilon + np) =
     $$
-    = $$
-    \frac{1}{\sqrt{2\pi}}
+    $$
+    =\frac{1}{\sqrt{2\pi}}
     \int\limits_{|t|\leqslant \varepsilon \sqrt{\frac{n}{pq}}}
     e^{-\frac{t^2}{2}} \dif t + \frac{1}{\sqrt{2\pi}}
     \int\limits_{|t| > \varepsilon \sqrt{\frac{n}{pq}}}
@@ -1912,7 +1912,7 @@ $$
     tP(\xi \geqslant t)
     $$
 \end{proof}
-\begin{corollary}[Неравенство Чебышёва]
+\begin{corollary}[Неравенство Чебышёва]\label{chebyshevs_inequality}
     Пусть существует $D\xi$. Тогда для любых $t > 0$ выполнено
     $P(|\xi - E\xi| \geqslant t) \leqslant \frac{D\xi}{t^2}$.
 \end{corollary}
@@ -2091,14 +2091,15 @@ $$
     Тогда выполняется закон больших чисел.
 \end{theorem}
 \begin{proof}
-    Возьмём произвольное $\varepsilon > 0$. Тогда из неравенства Чебышёва:
+    Возьмём произвольное $\varepsilon > 0$. Тогда из неравенства Чебышёва
+    (следствие \ref{chebyshevs_inequality}):
     $$
     P\bigg(\bigg|\frac{1}{n}\sum\limits_{k=1}^n\xi_k -
     \underbrace{\frac{1}{n}\sum\limits_{k=1}^na_k}_
     {E\frac{1}{n}\sum\limits_{k=1}^n \xi_k}
     \bigg| \geqslant \varepsilon\bigg) \leqslant
-    \frac{D\Big(\frac{1}{n}\sum\limits_{k=1}^n \xi_k\Big)}{\varepsilon^2} =
-    \frac{D\Big(\sum\limits_{k=1}^n \xi_k}{n^2 \varepsilon^2}
+    \frac{D\frac{1}{n}\sum\limits_{k=1}^n \xi_k}{\varepsilon^2} =
+    \frac{D\sum\limits_{k=1}^n \xi_k}{n^2 \varepsilon^2}
     \underto{n \to \infty} 0
     $$
 \end{proof}
@@ -2119,7 +2120,6 @@ $$
 \begin{remark}
     Теорема \ref{large_numbers_bernoulli} (Бернулли) является частным случаем
     теоремы Чебышёва.
-    
     Пусть $\eta_1, \eta_2,\ldots$ — последовательность независимых одинаково
     распределённых случайных величин с законом распределения:
     \begin{center}
