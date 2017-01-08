@@ -1071,8 +1071,8 @@ $P(A \cap B) = P(A)P(B)$. Введём теперь понятие незави�
 \begin{proof}
 \mbox{}
     \begin{enumerate}
-        \item (\ref{random_var_independence1} $\Rightarrow$
-        \ref{random_var_independence2})
+        \item (\ref{random_var_independence2} $\Rightarrow$
+        \ref{random_var_independence1})
         $$
         P\big((\xi, \eta) \in [a_1, b_1) \times
         [a_2, b_2)\big) = P(a_1 \leqslant \xi < b_1) \cdot P(a_2 \leqslant
@@ -1081,15 +1081,15 @@ $P(A \cap B) = P(A)P(B)$. Введём теперь понятие незави�
         При $a_1, a_2 \to -\infty$ левая часть равенства стремится к
         $F_{(\xi, \eta)}(b_1, b_2)$, а правая часть — к
         $F_\xi(b_1)\cdot F_\eta(b_2)$.
-        \item (\ref{random_var_independence2} $\Rightarrow$
-        \ref{random_var_independence1})
+        \item (\ref{random_var_independence1} $\Rightarrow$
+        \ref{random_var_independence2})
         $$
         P\big((\xi, \eta) \in [a_1, b_1) \times
         [a_2, b_2)\big) = F_{(\xi, \eta)}(b_1, b_2) - F_{(\xi, \eta)}(a_1, b_2)
         - F_{(\xi, \eta)}(b_1, b_a) +
         $$
         $$
-        + F_{(\xi, \eta)})(a_1, a_2) = F_\xi(b_1)F_\eta(b_2) - 
+        + F_{(\xi, \eta)}(a_1, a_2) = F_\xi(b_1)F_\eta(b_2) - 
         F_\xi(a_1)F_\eta(b_2) - F_\xi(b_1)F_\eta(a_2) +
         $$
         $$
@@ -1178,16 +1178,16 @@ $P(A \cap B) = P(A)P(B)$. Введём теперь понятие незави�
         Если $\xi_1$, $\xi_2$ независимы, то
         $\forall a,b \in \real$ и $\forall \varepsilon > 0$
         $P(a \leqslant \xi_1 \leqslant a + \varepsilon,
-        b \leqslant \xi_2 < b - \varepsilon) =
+        b \leqslant \xi_2 < b + \varepsilon) =
         P(a \leqslant \xi_1 \leqslant a + \varepsilon)
-        P(b \leqslant \xi_2 < b - \varepsilon)$ — по определению 
+        P(b \leqslant \xi_2 < b + \varepsilon)$ — по определению 
         \ref{random_var_independence2}. Устремим $\varepsilon$ к нулю.
         
         Обратно:
         $$
         F_{(\xi_1, \xi_2)}(y_1, y_2) =
-        \sum\limits_{a_i < y_1, b_j < y_2} P(\xi_1 = a_i, \xi_2 = b_j) =
-        \sum\limits_{a_i < y_1, b_j < y_2} P(\xi_1 = a_i)P(\xi_2 = b_j) =
+        \sum\limits_{\substack{a_i < y_1\\b_j < y_2}} P(\xi_1 = a_i, \xi_2 = b_j) =
+        \sum\limits_{\substack{a_i < y_1\\b_j < y_2}} P(\xi_1 = a_i)P(\xi_2 = b_j) =
         $$
         $$
         = \sum\limits_{b_j < y_2}\Bigg(\sum\limits_{a_i < y_1}
@@ -1221,13 +1221,13 @@ $$
 \int\limits_{-\infty}^{+\infty} p_\xi(x_1, \ldots, x_d)
 \dif x_2\ldots\dif x_d\Bigg)\dif x_1
 $$
-Что по определению равно $p_{\xi_1}(x_1)$ — плотности распределения $\xi_1$.
+Выражение в скобках равно $p_{\xi_1}(x_1)$ — плотности распределения $\xi_1$.
 
 Помимо этого, $\xi = (\xi_1, \ldots, \xi_d)$ —
 с абсолютно непрерывным распределением
 $\iff$ для любых $a_1 < b_1, \ldots, a_d < b_d$ выполнено
 $$
-P(a_1 \leqslant \xi_1 < b_1, \ldots, a_d \leqslant \xi_d < b_d =
+P(a_1 \leqslant \xi_1 < b_1, \ldots, a_d \leqslant \xi_d < b_d) =
 \int\limits_{a_1}^{b_1}\ldots\int\limits_{a_d}^{b_d} p_\xi(x_1, \ldots, x_d)
 \dif x_1\ldots \dif x_d
 $$
@@ -1248,11 +1248,11 @@ $$
 \begin{proof}
     Проверим необходимость. Рассмотрим функцию распределения в произвольной точке:
     $F_{(\xi_1, \xi_2)}(x, y) = F_{\xi_1}(x)F_{\xi_2}(y)$. Дважды 
-    продифференцировав это равенство, получим
+    продифференцировав левую часть, получим
     $$
     \frac{\dif^2 F_{(\xi_1, \xi_2)}(x, y)}{\dif x \dif y} = p_\xi(x, y)
     $$
-    Левая часть равна $\frac{\dif^2 F_{\xi_1}(x)F_{\xi_2}(y)}{\dif x \dif y} =
+    Но $\frac{\dif^2 F_{\xi_1}(x)F_{\xi_2}(y)}{\dif x \dif y} =
     \frac{\dif F_{\xi_1}(x)}{\dif x}\frac{\dif F_{\xi_2}(y)}{\dif y} =
     p_{\xi_1}(x)p_{\xi_2}(y)$.
     
@@ -1271,11 +1271,16 @@ $$
 \end{theorem}
 \begin{proof}
     Рассмотрим $B_1, B_2 \in \mathfrak B$.
-    $P(f(\xi) \in B_1, g(\eta) \in B_2) = P(\xi \in f^{-1}(B_1), \eta g^{-1}(B_2)$
+    $$
+    P\big(f(\xi) \in B_1, g(\eta) \in B_2\big) =
+    P\big(\xi \in f^{-1}(B_1), \eta \in g^{-1}(B_2)\big)
+    $$
     Но так как функции измеримы, то прообразы измеримых подмножеств будут также 
-    измеримыми. По определению \ref{random_var_independence3} это равно
-    $P(\xi \in f^{-1}(B_1)) P(\eta \in g^{-1}(B_2)) = P(f(\xi) \in B_1,
-    g(\eta) \in B_2)$
+    измеримыми. По определению \ref{random_var_independence3} это равно:
+    $$
+    P\big(\xi \in f^{-1}(B_1)\big) P\big(\eta \in g^{-1}(B_2)\big) = P\big(f(\xi) \in B_1\big)
+    P\big(g(\eta) \in B_2\big)
+    $$
 \end{proof}
 
 \subsection{Свёртка распределения}
@@ -1294,7 +1299,7 @@ $$
 \int\limits_{-\infty}^{+\infty}
 \Bigg(\int\limits_{-\infty}^{x-s} \dif F_\eta(t)\Bigg) \dif F_\xi(s)
 $$
-Таким образом, доказана следующая теорема.
+Здесь $A_x = \{(s, t)\, |\, s+t<x\}$. Таким образом, доказана следующая теорема.
 \begin{theorem}[О свёртке распределения]
     $$
     F_{\xi + \eta}(x) = \int\limits_{-\infty}^{+\infty} F_\eta(x-s)
