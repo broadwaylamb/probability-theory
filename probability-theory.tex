@@ -827,7 +827,7 @@ $\forall B \in \mathfrak B$ $\mathfrak P_\xi(B) = P(\xi^{-1}(B))$.
 \begin{definition}
     $\mathfrak P_\xi$ называется \emph{распределением случайной величины $\xi$}.
 \end{definition}
-\begin{theorem}
+\begin{theorem}\label{distribution_is_probability}
     $\mathfrak P_\xi$ является вероятностью.
 \end{theorem}
 \begin{proof}
@@ -1323,7 +1323,7 @@ $$
 
 Как обычно, будем рассматривать вероятностное пространство
 $(\Omega, \mathfrak{F}, P)$, случайная величина $\xi: \Omega \to \real$ с функцией
-распределения $F_\xi(x( = P(\xi < x)$ и распределением $\mathfrak P_\xi(x) =
+распределения $F_\xi(x) = P(\xi < x)$ и распределением $\mathfrak P_\xi(A) =
 P(\xi^{-1}(A)) = P(\xi \in A)$.
 
 \begin{definition}
@@ -1397,7 +1397,7 @@ $$
         \item $P(\xi \geqslant \eta) = P(\xi - \eta \geqslant 0) = 1 \implies
         E(\xi - \eta) = E\xi - E\eta \geqslant 0$
         \item Так как $|\xi| \geqslant \xi$ и $|\xi| \geqslant - \xi$, то
-        $E|\xi| \geqslant\xi$ и $E|\xi| \geqslant - E\xi$.
+        $E|\xi| \geqslant E\xi$ и $E|\xi| \geqslant - E\xi$.
     \end{enumerate}
 \end{proof}
 
@@ -1474,15 +1474,23 @@ $$
         E\big|f(\xi) - f^m(\xi)\big| \leqslant \frac{1}{m}
         $$
         $$
-        \big|\int\limits_{\real^n} f(x_1, \ldots, x_n)
+        \Bigg|\int\limits_{\real^n} f(x_1, \ldots, x_n)
         \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n) -
         \int\limits_{\real^n} f^m(x_1, \ldots, x_n)
-        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\big| \leqslant \frac{1}{m}
+        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\Bigg| \leqslant
         $$
+        $$
+        \leqslant \int\limits_{\real^n}\big|f(x_1, \ldots, x_n)-f^m(x_1, \ldots, x_n)\big|
+        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n) \leqslant
+        \frac{1}{m} \int\limits_{\real^n}\mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)
+        \leqslant\frac{1}{m}
+        $$
+        В последнем неравенстве мы пользуемся тем, что интеграл на $\real^n$ от единицы
+        по вероятностной мере равен единице (теорема \ref{distribution_is_probability}).
         Рассмотрим модуль:
         $$
-        \big| Ef(\xi) - \int\limits_{\real^n} f(x_1, \ldots, x_n)
-        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\big|
+        \Bigg| Ef(\xi) - \int\limits_{\real^n} f(x_1, \ldots, x_n)
+        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\Bigg|
         $$
         Прибавим и вычтем в выражении под знаком модуля
         $$
@@ -1491,21 +1499,22 @@ $$
         $$
         Получим:
         $$
-        \big| Ef(\xi) - \int\limits_{\real^n} f(x_1, \ldots, x_n)
-        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\big| \leqslant
+        \Bigg| Ef(\xi) - \int\limits_{\real^n} f(x_1, \ldots, x_n)
+        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\Bigg| \leqslant
         $$
         $$
-        \leqslant\big| Ef(\xi) - \int\limits_{\real^n} f^m(x_1, \ldots, x_n)
-        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\big| +
+        \leqslant\Bigg| Ef(\xi) - \int\limits_{\real^n} f^m(x_1, \ldots, x_n)
+        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\Bigg| +
         $$
         $$
-        +\big|f^m(x_1, \ldots, x_n)
+        +\Bigg|\int\limits_{\real^n}f^m(x_1, \ldots, x_n)
         \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n) -
-        f(x_1, \ldots, x_n)
-        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\big| \leqslant
+        \int\limits_{\real^n}f(x_1, \ldots, x_n)
+        \mathfrak P_\xi(\dif x_1, \ldots, \dif x_n)\Bigg| \leqslant
         \frac{1}{m} + \frac{1}{m} = \frac{2}{m}
         $$
-        Поскольку результат не зависит от $m$, то исходная разность равна нулю
+        Поскольку это выполнено для любого сколь угодно болььшого $m$,
+        исходная разность равна нулю
         и теорема доказана.
     \end{enumerate}
 \end{proof}
@@ -1521,7 +1530,7 @@ $$
     F_{(\xi, \eta)}(x, y) = F_\xi(x)F_\eta(y)
     $$
     $$
-    \mathfrak P_{(\xi, \eta)} = \mathfrak P_\xi \times \mathfrak P_\eta
+    \mathfrak P_{(\xi, \eta)} = \mathfrak P_\xi \cdot \mathfrak P_\eta
     $$
     Возьмём функцию $f: \real^2 \to \real$: $f(x, y) = xy$.
     $$
