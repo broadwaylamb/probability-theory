@@ -17,6 +17,7 @@
 \usepackage{enumitem}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
+\usepackage{extarrows}
 \usetikzlibrary{calc}
 
 \tikzset{
@@ -51,6 +52,7 @@
 \newcommand\real{\mb R}
 \newcommand{\complex}{\mb C}
 \newcommand\eqdef{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+\newcommand{\undereq}[1]{\xlongequal{#1}}
 \newcommand\lparagraph[1]{\paragraph{#1}\mbox{}\\}
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\uto}{\rightrightarrows}
@@ -1587,55 +1589,77 @@ $$
         $\eta - E\eta$ будут независимыми, отсюда
         $E((\xi - E\xi)(\eta - E\eta)) = E(\xi - E\xi)\cdot E(\eta - E\eta) = 0$.
         Подставим полученный результат в предыдущее свойство.
-        \item $D\xi = E(\xi - E\xi) \ldots$
+        \item $D\xi = E(\xi - E\xi)^2 = E(\xi^2 - 2\xi E\xi + (E\xi)^2) =
+        E\xi^2 - 2(E\xi)^2 + E(E\xi)^2 = E\xi^2 - (E\xi)^2$.
     \end{enumerate}
 \end{proof}
 
 \begin{examples}
+\mbox{}
     \begin{enumerate}
         \item $(\xi, p): (c, 1)$ (вырожденное распределение). Тогда $E\xi = c$,
         $D\xi = 0$.
-        \item Если $(\xi, p): (0, 1-p), (1-p, p)$, то $E\xi = p$, $D\xi = p(1-p)$.
+        \item Если $(\xi, p): (0, 1-p), (1, p)$, то $E\xi = p$, $D\xi = p(1-p)$.
         \item $\xi \in B(n, p)$ — случайная величина с биномиальным законом
-        распределения, т. е. $p(\xi = k) = C_n^kp^k(q-p)^{n-k}$. Для этой величины
-        $E\xi = \sum\limits_{k=0}^n k\cdot C_n^kp^k(1-p)^{n-k} =
+        распределения, то есть $p(\xi = k) = C_n^kp^k(1-p)^{n-k}$. Для этой величины:
+        $$
+        E\xi = \sum\limits_{k=0}^n k\cdot C_n^kp^k(1-p)^{n-k} =
         \sum\limits_{k=1}^n k\cdot C_n^kp^k(1-p)^{n-k} =
         \sum\limits_{k=1}^n \frac{n!}{(k-1)!(n-k)!}p^k(1-p)^{n-k} =
-        np\sum\limits_{k=1}^n \frac{(n-1)!}{(k-1)!(n-1-(k-1))!}
-        p^{k-1}(1-p)^{n-1-(k-1)}$. Взяв $l = k-1$, получим
-        $E\xi = np\sum\limits_{l=0}^{n-1} C_n^l p^l(1-p)^{n-1 - l} = np$.
+        $$
+        $$
+        = np\sum\limits_{k=1}^n \frac{(n-1)!}{(k-1)!(n-1-(k-1))!}
+        p^{k-1}(1-p)^{n-1-(k-1)}
+        $$
+        Взяв $l = k-1$, получим
+        $E\xi = np\sum\limits_{l=0}^{n-1} C_{n-1}^l p^l(1-p)^{n-1 - l} =
+        np(p + (1-p))^{n-1} = np$ (здесь мы использовали бином Ньютона).
         $D\xi = np(1-p)$.
         \item Рассмотрим $\xi \in \Pi(\lambda)$ — случайную величину с 
         пуассоновским законом распределения: $P(\xi = k) =
         \frac{\lambda^k}{k!}e^{-\lambda}$.
-        $E\xi = \sum\limits_{k=0}^\infty k\frac{\lambda^k}{k!}e^{-\lambda} =
+        $$E\xi = \sum\limits_{k=0}^\infty k\frac{\lambda^k}{k!}e^{-\lambda} =
         \sum\limits_{k=1}^\infty \frac{\lambda^k}{(k-1)!}e^{-\lambda} =
         \lambda e^{-\lambda}\sum\limits_{k=1}^\infty
         \frac{\lambda^{k-1}}{(k-1)!} =
-        \lambda$. Для вычисления дисперсии вычислим сначала
-        $E\xi^2 = \sum\limits_{k=0}^\infty k^2\frac{\lambda^k}{k!}e^{-\lambda} =
+        \lambda
+        $$
+        Для вычисления дисперсии вычислим сначала $E\xi^2$:
+        $$
+        E\xi^2 = \sum\limits_{k=0}^\infty k^2\frac{\lambda^k}{k!}e^{-\lambda} =
         \sum\limits_{k=1}^\infty k\frac{\lambda^k}{(k-1)!}e^{-\lambda} =
-        \sum\limits_{k=1}^\infty (k-1)\frac{\lambda^k}{(k-1)!}e^{-\lambda} +
+        $$
+        $$
+        = \sum\limits_{k=1}^\infty (k-1)\frac{\lambda^k}{(k-1)!}e^{-\lambda} +
         \sum\limits_{k=1}^\infty\frac{\lambda^k}{(k-1)!}e^{-\lambda} =
         \sum\limits_{k=2}^\infty \frac{\lambda^k}{(k-2)!}e^{-\lambda} +
         \lambda e^{-\lambda}
         \sum\limits_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!} =
-        \lambda^2 e^{-\lambda}
-        \sum\limits_{k=2}^\infty\frac{\lambda^{k-2}}{(k-2)!}$
-        
-        $\cdots$
-        \item Для $\xi \in U_{[a,b]}$ математическое ожидание $E\xi =
-        \int\limits_a^b x\frac{1}{b-a}\dif x = \frac{a + b}{2}$. $E\xi^2 =
-        \int\limits_a^b x^2\frac{1}{b-a}\dif x = \frac{b^3 - a^3}{3(b-a)}$.
+        $$
+        $$
+        = \lambda^2 e^{-\lambda}
+        \sum\limits_{k=2}^\infty\frac{\lambda^{k-2}}{(k-2)!} + \lambda = \lambda^2 + \lambda
+        $$
+        С учётом $(E\xi)^2 = \lambda^2$ получаем $D\xi = \lambda$.
+        \item Для $\xi \in U_{[a,b]}$ математическое ожидание будет:
+        $$
+        E\xi =
+        \int\limits_a^b x\frac{1}{b-a}\dif x = \frac{a + b}{2}
+        $$
+        $$
+        E\xi^2 =
+        \int\limits_a^b x^2\frac{1}{b-a}\dif x = \frac{b^3 - a^3}{3(b-a)} =
+        \frac{a^2 + ab + b^2}{3}
+        $$
         Тогда $D\xi = E\xi^2 - (E\xi)^2 = \frac{(b-a)^2}{12}$.
         \item $\xi \in N(a, \sigma^2)$ — случайная величина с нормальным
         законом распределения ($p_\xi(x) =
         \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-a)^2}{2\sigma^2}}$).
         $$
         E\xi = \int\limits_{-\infty}^{+\infty}x\frac{1}{\sqrt{2\pi\sigma^2}}
-        e^{-\frac{(x-a)^2}{2\sigma^2}}\dif x =
+        e^{-\frac{(x-a)^2}{2\sigma^2}}\dif x \undereq{x = \sigma y + a}
         \int\limits_{-\infty}^{+\infty}
-        (\sigma y - a)\frac{1}{\sqrt{2\pi\sigma^2}}
+        (\sigma y + a)\frac{1}{\sqrt{2\pi\sigma^2}}
         e^{-\frac{y^2}{2}}\sigma\dif y =
         $$
         $$
@@ -1647,14 +1671,17 @@ $$
         $$
         D\xi = \int\limits_{-\infty}^{+\infty}
         (x-a)^2\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-a)^2}{2\sigma^2}} \dif x
-        = \int\limits_{-\infty}^{+\infty}
-        \sigma^2 y^2 \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{y^2}{2}}\sigma \dif y
-        = \sigma^2 \int\limits_{-\infty}^{+\infty}
-        y^2 \frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}}\dif y =
+        \undereq{x = \sigma y + a} \int\limits_{-\infty}^{+\infty}
+        \sigma^2 y^2 \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{y^2}{2}}\sigma \dif y =
         $$
         $$
+        =\sigma^2 \int\limits_{-\infty}^{+\infty}
+        y^2 \frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}}\dif y
         = \sigma^2 \frac{1}{\sqrt{2\pi}} \int\limits_{-\infty}^{+\infty}
-        y\cdot ye^{-\frac{y^2}{2}}\dif y = \sigma^2 \frac{1}{\sqrt{2\pi}}
+        y\cdot ye^{-\frac{y^2}{2}}\dif y =
+        $$
+        $$
+        = \sigma^2 \frac{1}{\sqrt{2\pi}}
         \bigg[ -ye^{-\frac{y^2}{2}}\bigg|_{-\infty}^{+\infty} +
         \int\limits_{-\infty}^{+\infty}e^{-\frac{y^2}{2}}\dif y\bigg] = \sigma^2
         $$
