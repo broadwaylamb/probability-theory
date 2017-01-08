@@ -1750,10 +1750,8 @@ $$
 
 Рассматриваем вероятностное пространство $(\Omega, \mathfrak F, P)$.
 
-\begin{definition}
-    Если $\xi, \eta$ — случайные величины, то их ковариацией $\cov (\xi, \eta)$
-    называется число $E(\xi - E\xi)(\eta - E\eta)$.
-\end{definition}
+Вспомним, что если $\xi, \eta$ — случайные величины, то их ковариацией $\cov (\xi, \eta)$
+называется число $E(\xi - E\xi)(\eta - E\eta)$.
 \begin{proposition}[Свойства ковариации]
 \mbox{}
     \begin{enumerate}
@@ -1773,7 +1771,7 @@ $$
 Заметим:
 $$
 \rho(\xi, \eta) =
-\frac{E(\xi - E\xi)(\eta - E\eta)}{\sqrt{(D\xi, D\eta)}} =
+\frac{E(\xi - E\xi)(\eta - E\eta)}{\sqrt{D\xi\cdot D\eta}} =
 E\frac{\xi - E\xi}{\sqrt{D\xi}}\cdot \frac{\eta - E\eta}{\sqrt{D\eta}}
 $$
 
@@ -1785,7 +1783,6 @@ $$
         вообще говоря, неверно.
         \item $|\rho(\xi, \eta)| = 1 \iff \exists a,b \in \real:$
         $P(\xi = a\eta + b) = 1$ и $a\rho(\xi, \eta) > 0$.
-        \item 
     \end{enumerate}
 \end{proposition}
 \begin{proof}
@@ -1810,28 +1807,40 @@ $$
         \sqrt{E\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}}\bigg)^2}
         \sqrt{E\bigg(\frac{\eta - E\eta}{\sqrt{D\eta}}\bigg)^2} = 1
         $$
+        (Мы воспользовались неравенством Коши-Буняковского-Шварца.)
         \item Очевидно.
         \item Пусть $\rho(\xi, \eta) = 1$. Тогда:
         $$
-        D\bigg(\frac{\xi - E\xi}{\sqrt{E\xi}} -
+        D\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}} -
         \frac{\eta - E\eta}{\sqrt{D\eta}}\bigg) =
-        E\bigg(\frac{\xi - E\xi}{\sqrt{E\xi}} -
+        E\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}} -
         \frac{\eta - E\eta}{\sqrt{D\eta}}\bigg)^2 =
         $$
         $$
         =
-        E\bigg(\frac{\xi - E\xi}{\sqrt{E\xi}}\bigg)^2 +
-        E\bigg(\frac{\eta - E\eta}{\sqrt{E\eta}}\bigg)^2 -
-        2E\frac{\xi - E\xi}{\sqrt{E\xi}} \cdot \frac{\eta - E\eta}{\sqrt{E\eta}} =
+        E\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}}\bigg)^2 +
+        E\bigg(\frac{\eta - E\eta}{\sqrt{D\eta}}\bigg)^2 -
+        2E\frac{\xi - E\xi}{\sqrt{D\xi}} \cdot \frac{\eta - E\eta}{\sqrt{D\eta}} =
         2 - 2\rho(\xi, \eta) = 0
         $$
-        Это равносильно существованию такого $c \in \real$, что:
+        Это означает, что распределение случайной величины вырожденное, то есть, существует такое
+        $c \in \real$, что:
         $$
-        P\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}}\mp
+        P\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}} -
         \frac{\eta - E\eta}{\sqrt{D\eta}} = c\bigg) = 1
         $$
+        Откуда домножением на $\sqrt{D\xi}$ и переносом нужных слагаемых в правую часть получим:
         $$
-        P\bigg(\xi = \pm\frac{\sqrt{D\xi}}{\sqrt{D\eta}}\eta + b\bigg) = 1
+        P\bigg(\xi = \frac{\sqrt{D\xi}}{\sqrt{D\eta}}\eta + b\bigg) = 1
+        $$
+        Аналогично при $\rho(\xi, \eta) = -1$ будет:
+        $$
+        D\bigg(\frac{\xi - E\xi}{\sqrt{D\xi}} +
+        \frac{\eta - E\eta}{\sqrt{D\eta}}\bigg) = 0
+        $$
+        И получаем:
+        $$
+        P\bigg(\xi = -\frac{\sqrt{D\xi}}{\sqrt{D\eta}}\eta + b\bigg) = 1
         $$
     \end{enumerate}
 \end{proof}
