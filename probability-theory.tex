@@ -2414,11 +2414,12 @@ $$
     $$
     P\bigg(\bigg|\frac{1}{n}\sum\limits_{k=1}^n (\xi_k - a)\bigg|\geqslant\varepsilon\bigg)
     \leqslant
-    \underbrace{F_{\frac{1}{n}\sum\limits_{k=1}^n (\xi_k - a)}(-\varepsilon)}_
+    \underbrace{F_{\frac{1}{n}\sum\limits_{k=1}^n (\xi_k - a)}\bigg(-\frac{\varepsilon}{2}\bigg)}_
     {\underto{n \to \infty} 0} +
     \underbrace{1 - F_{\frac{1}{n}\sum\limits_{k=1}^n (\xi_k - a)}(\varepsilon)}_
     {\underto{n \to \infty} 0}
     $$
+    Здесь мы использовали $-\frac{\varepsilon}{2}$, чтобы сохранить нестрогость неравенства.
 \end{proof}
 
 \subsection{Центральная предельная теорема}
@@ -2438,7 +2439,7 @@ $$
     $$
 \end{definition}
 
-\begin{theorem}[Центральная предельная теорема Леви]
+\begin{theorem}[Центральная предельная теорема Леви]\label{levys_clt}
     Пусть $\xi_1, \xi_2, \ldots$ — последовательность независимых одинаково распределённых 
     случайных величин, у которых существует математическое ожидание $E\xi_k = a$ и 
     дисперсия $D\xi_k = \sigma^2 < \infty$. Тогда для этой последовательности
@@ -2455,9 +2456,9 @@ $$
     Рассмотрим характеристическую функцию случайной величины $\frac{\xi_k - a}{\sigma}$. 
     Заметим, что $E\frac{\xi_k - a}{\sigma} = 0$, $D\frac{\xi_k - a}{\sigma} = 1 =
     E\Big(\frac{\xi_k - a}{\sigma}\Big)^2$. Тогда характеристическую функцию можно
-    разложить в ряд Тейлора:
+    разложить по формуле Тейлора:
     $$
-    f_{\frac{\xi_k - a}{\sigma}} = 1 + \frac{(it)^2}{2} + o(t^2) = 1 - \frac{t^2}{2} + o(1)
+    f_{\frac{\xi_k - a}{\sigma}}(t) = 1 + \frac{(it)^2}{2} + o(t^2) = 1 - \frac{t^2}{2} + o(1)
     $$
     Отсюда:
     $$
@@ -2487,15 +2488,15 @@ $$
 \end{center}
     
 $$
-P\bigg(\sum\limits_{k=1}^n\xi_k < b) =
+P\bigg(\sum\limits_{k=1}^n\xi_k < b\bigg) =
 P\Bigg(\frac{\sum\limits_{k=1}^n \xi_k - np}{\sqrt{np(1-p)}} < \frac{b - np}{\sqrt{np(1-p)}}
 \Bigg) \sim \Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)
 $$
 
 \begin{theorem}[Центральная предельная теорема Ляпунова]
-    Пусть $\xi_1, \xi_2, \ldots$ — последовательность независимых одинаково распределённых 
-    случайных величин, у которых существуют математическое ожидание $E\xi_k = a$, 
-    дисперсия $D\xi_k = \sigma^2 < \infty$ и третьи центральные абсолютные моменты
+    Пусть $\xi_1, \xi_2, \ldots$ — последовательность независимых 
+    случайных величин, у которых существуют математические ожидания $E\xi_k = a_k$, 
+    дисперсии $D\xi_k = \sigma_k^2 < \infty$ и третьи центральные абсолютные моменты
     $c_k^3 = E|\xi_k - a_k|^3 < \infty$. Возьмём $A_n = \sum\limits_{k=1}^n a_k$,
     $B_n^2 = \sum\limits_{k=1}^n \sigma_k^2$, $C_n^3 = \sum\limits_{k=1}^n c_k^3$.
     Пусть также $L_n = \frac{C_n}{B_n} \underto{n \to \infty} 0$. Тогда для
@@ -2518,9 +2519,11 @@ $$
 Другой тип задач заключается в нахождении некоторого параметра $\alpha$, от которого
 может зависеть функция распределения $F(x, \alpha)$.
 
-Пусть $G(X_1, X_2 \ldots, X_n) = g_n$. Такая величина называется \emph{статистикой}, или 
+Функция $G(X_1, X_2 \ldots, X_n) = g_n$, не зависящая от неизвестных параметров распределения,
+называется \emph{статистикой}, или 
 \emph{оценкой}.
 
+Рассмотрим функцию:
 $$
 \widetilde{F}_n(t) = \frac{\text{число тех } X_i \text{, которые меньше } t}{n} =
 \frac{1}{n}\sum\limits_{i=1}^n\mathbb I_{(-\infty, t)}(X_i)
@@ -2528,24 +2531,26 @@ $$
 Здесь $\mathbb I_A(x) = \begin{cases}
     1,\quad x \in A \\
     0,\quad x \notin A \\
-\end{cases}$.
+\end{cases}$. Такая функция называется \emph{выборочной (эмпирической) функцией распределения}.
 
 \begin{enumerate}
-    \item $\frac{1}{n}\sum\limits_{i=1}^n X_i^k$
-    \item $\frac{1}{n}\sum\limits_{i=1}^nX_i = \ol X$
-    \item $\frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^k$
-    \item $\frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^2 = s^2 =
-    \frac{1}{n}\sum\limits_{i=1}^n X_i^2 - {\ol X}^2$
-    \item $s_0^2 = \frac{1}{n-1}\sum\limits_{i=1}^n(X_i - \ol X)^2$
+    \item $\frac{1}{n}\sum\limits_{i=1}^n X_i^k$ называется $k$-м начальным выборочным моментом.
+    \item $\frac{1}{n}\sum\limits_{i=1}^nX_i = \ol X$ — выборочное математическое ожидание.
+    \item $\frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^k$ — $k$-й центральный выборочный момент.
+    \item $s^2 = \frac{1}{n}\sum\limits_{i=1}^n(X_i - \ol X)^2 =
+    \frac{1}{n}\sum\limits_{i=1}^n X_i^2 - {\ol X}^2$ — выборочная дисперсия.
+    \item $s_0^2 = \frac{1}{n-1}\sum\limits_{i=1}^n(X_i - \ol X)^2$ — выборочная исправленния 
+    дисперсия.
 \end{enumerate}
 
 Рассмотрим $X_{(1)} = \min(X_1, \ldots, X_n)$, $X_{(2)}$ — следующее по величине значение,
-и так далее, $X_{(n)} = \max(X_1, \ldots, X_n)$.
+и так далее, $X_{(n)} = \max(X_1, \ldots, X_n)$. Последовательность $X_{(1)}, X_{(2)}, \ldots$
+называется \emph{вариационным рядом}, а её элемент $X_{(k)}$ — $k$-й порядковой 
+статистикой.
 
-$X_{(k)}$ — $k$-я порядковая статистика.
-
+Функция распределения $k$-й порядковой статистики имеет вид:
 $$
-G(k(x) = P\big(X_{(k)} < x\big) = \sum\limits_{i=k}^nC_n^i(F(x))^i(1-F(x))^{n-i}
+G_k(x) = P\big(X_{(k)} < x\big) = \sum\limits_{i=k}^nC_n^i\big(F(x)\big)^i\big(1-F(x)\big)^{n-i}
 $$
 
 Определим \emph{медиану} выборки как $m_{\frac{1}{2}} = \begin{cases}
@@ -2566,15 +2571,16 @@ $Y_1, \ldots, Y_n \sim H(y)$.
 а $R(X, Y) = \frac{\ol{\cov}(X, Y)}{\sqrt{s_X^2s_Y^2}}$ — выборочным коэффициентом 
 корреляции.
 
+Пусть $g_n$ — оценка, $\alpha$ — некоторый неизвестный параметр выборки.
 \begin{enumerate}
     \item Если $Eg_n = \alpha$, то $g_n$ называется
     \emph{несмещённой оценкой}. Если $Eg_n \underto{n \to \infty} \alpha$, то $g_n$ 
-    называется \emph{асимптотической несмещённой} оценкой.
+    называется \emph{асимптотически несмещённой} оценкой.
     \item Если $g_n \overto{P} \alpha$, то $g_n$ — \emph{состоятельная} 
     оценка.
     \item Если
     $\sqrt n \frac{g_n - \alpha}{\Delta} \overto{\mathrm d} N(0, 1)$, то $g_n$ — 
-    \emph{асимптотическая нормальная} оценка с дисперсией $\Delta^2$
+    \emph{асимптотически нормальная} оценка с дисперсией $\Delta^2$
 \end{enumerate}
 
 \begin{theorem}[Гливенко]
@@ -2583,7 +2589,7 @@ $Y_1, \ldots, Y_n \sim H(y)$.
     и асимптотически нормальной оценкой для генеральной функции распределения $F(x)$.
 \end{theorem}
 \begin{proof}
-    Вспомни, что выборочная функция распределения может быть записана как
+    Вспомним, что выборочная функция распределения может быть записана как
     $\ol F(x) = \frac{1}{n}\sum\limits_{i=1}^n \mb I_{(-\infty, x)} (X_i)$.
     Заметим, что $\mb I_{(-\infty, x)} (X_1), \mb I_{(-\infty, x)} (X_2), \ldots,
     \mb I_{(-\infty, x)} (X_n)$ — независимые одинаковы распределённые случайные величины.
@@ -2601,17 +2607,17 @@ $Y_1, \ldots, Y_n \sim H(y)$.
     E\ol F(x) = E\frac{1}{n}\sum\limits_{i=1}^n\mb I_{(-\infty, x)} (X_i) =
     \frac{1}{n}\sum\limits_{i=1}^nE\mb I_{(-\infty, x)} (X_i) = F(x)
     $$
-    Это означает несмещённость. По закону больших чисел Хинчина:
+    Это означает несмещённость. По закону больших чисел Хинчина (теорема \ref{hinchins_lln}):
     $$
     \frac{1}{n}\sum\limits_{i=1}^n\mb I_{(-\infty, x)} (X_i) \overto{\mathrm P} F(x)
     $$
-    Это означает состоятельность. По центральной предельной теореме Леви:
+    Это означает состоятельность. По центральной предельной теореме Леви (\ref{levys_clt}):
     $$
     \frac{\sum\limits_{i=1}^n \mb I_{(-\infty, x)} (X_i) - nF(x)}{\sqrt{(1 - F(x))F(x)n}}
     \overto{\mathrm d} N(0, 1)
     $$
     $$
-    \frac{\sqrt n (\ol F(x) - F(x))}{\sqrt{F(x)(1 - F(x)}} \overto{\mathrm d} N(0, 1)
+    \frac{\sqrt n (\ol F(x) - F(x))}{\sqrt{F(x)(1 - F(x))}} \overto{\mathrm d} N(0, 1)
     $$
     Это означает асимптотическую нормальность.
 \end{proof}
@@ -2622,10 +2628,10 @@ $Y_1, \ldots, Y_n \sim H(y)$.
 \begin{theorem}[Свойства выборочного среднего]
 \mbox{}
     \begin{enumerate}
-        \item Выборочное среднее $\ol X$ — несмещённая оценка для матожидания $a$.
+        \item Выборочное среднее $\ol X$ — несмещённая оценка для математического ожидания $a$.
         \item $\ol X$ — состоятельная оценка для $a$.
-        \item Если существует второй момент $EX_i^2$, то $\ol X$ — асимптотическая оценка для
-        $a$.
+        \item Если существует второй момент $EX_i^2$, то $\ol X$ — асимптотически нормальная оценка 
+        для $a$.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
@@ -2636,7 +2642,7 @@ $Y_1, \ldots, Y_n \sim H(y)$.
         \item По закону больших чисел Хинчина
         $\frac{1}{n}\sum\limits_{i=1}^n X_i \overto{\mathrm P} a$
         \item По центральной предельной теореме Леви
-        $\frac{\sum\limits_{i=1}^n X_i - na}{\sqrt{n (EX_i^2 - (EX_i)^2}}
+        $\frac{\sum\limits_{i=1}^n X_i - na}{\sqrt{n \big(EX_i^2 - (EX_i)^2\big)}}
         \overto{\mathrm d} N(0, 1)$
     \end{enumerate}
 \end{proof}
@@ -2645,13 +2651,34 @@ $Y_1, \ldots, Y_n \sim H(y)$.
 Вспомним, что $s^2 = \frac{1}{n} \sum\limits_{i=1}^n (X_i - \ol X)^2 =
 \frac{1}{n}\sum\limits_{i=1}^n X_i^2 - \ol X^2$
 
-\begin{theorem}[Свойства оценки $s^2$]
+\begin{lemma}
+    Пусть $\Delta_n = \xi_n + \eta_n$, $\xi_n \overto{\mathrm d} \xi$,
+    $\eta_n \overto{\mathrm P} 0$. Тогда $\Delta_n \overto{\mathrm d} \xi$.
+\end{lemma}
+\begin{proof}
+    $$
+    |f_{\Delta_n}(t) - f_\xi(t)| = |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi}|
+    \leqslant |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi_n}| +
+    \underbrace{|Ee^{it\xi_n} - Ee^{it\xi}|}_{\to 0}
+    $$
+    $$
+    |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi_n}| = |Ee^{it\xi_n}(e^{it\eta_n} - 1)| \leqslant
+    E\underbrace{|e^{it\eta_n} - 1|}_{\leqslant 2}
+    $$
+    Из сходимости $\eta_n$ по вероятности к нулю следует сходимость по
+    распределению, что влечёт сходимость характеристических функций
+    $ e^{it\eta_n} \underto{n \to \infty} 1$.
+    По теореме Лебега о предельном переходе под знаком интеграла
+    $E|e^{it\eta_n} - 1| \underto{n \to \infty} 0$.
+\end{proof}
+
+\begin{theorem}[Свойства выборочной дисперсии]
 \mbox{}
     \begin{enumerate}
         \item $s^2$ — инвариантная относительно сдвига выборки оценка.
-        \item $s^2$ — асимптотическая несмещённая оценка для $\sigma^2$ (которая смещённая).
+        \item $s^2$ — асимптотически несмещённая оценка для $\sigma^2$ (которая смещённая).
         \item $s^2$ — состоятельная оценка для $\sigma^2$.
-        \item Если существует $EX_i^4$, то $s^2$ — асимптотическая нормальная оценка с 
+        \item Если существует $EX_i^4$, то $s^2$ — асимптотически нормальная оценка с 
         дисперсией $EX_i^4 - (EX_i^2)^2$ для $\sigma^2$.
     \end{enumerate}
 \end{theorem}
@@ -2667,11 +2694,11 @@ $Y_1, \ldots, Y_n \sim H(y)$.
         \item
         $$
         Es^2 = E\frac{1}{n}\sum\limits_{i=1}^n X_i^2 - E(\ol X)^2 =
-        \frac{1}{n}\sum\limits_{i=1}^n EX_i^2 =
+        \frac{1}{n}\sum\limits_{i=1}^n \underbrace{EX_i^2}_{\sigma^2} -
         E\bigg(\frac{1}{n}\sum\limits_{i=1}^n X_i\bigg)^2 =
         $$
         $$
-        \sigma^2 - \frac{1}{n^2} \bigg(\underbrace{E\sum\limits_{i \neq j}X_iX_j}_
+        = \sigma^2 - \frac{1}{n^2} \bigg(\underbrace{E\sum\limits_{i \neq j}X_iX_j}_
         {= \sum\limits_{i \neq j} EX_iEX_j = 0} +
         E\sum\limits_{i=1}^n X_i^2\bigg) = \sigma^2 - \frac{1}{n}\sigma^2 =
         \frac{n - 1}{n}\sigma ^2 \underto{n \to \infty} \sigma^2
@@ -2683,7 +2710,7 @@ $Y_1, \ldots, Y_n \sim H(y)$.
         \geqslant \varepsilon \bigg) \leqslant
         P\bigg(\bigg|\frac{1}{n}\sum\limits_{i=1}^n X_i^2 - \sigma^2\bigg|
         \geqslant \frac{\varepsilon}{2} \bigg) +
-        P\bigg(\ol x^2 \geqslant \frac{\varepsilon}{2}\bigg)
+        P\bigg(\ol X^2 \geqslant \frac{\varepsilon}{2}\bigg)
         $$
         По закону больших чисел Хинчина первое слагаемое в правой части неравенства стремится
         к нулю при $n \to \infty$.
@@ -2698,30 +2725,16 @@ $Y_1, \ldots, Y_n \sim H(y)$.
         $$
         \sqrt{n}(s^2 - \sigma^2) =
         \sqrt{n}\bigg(\frac{1}{n} \sum\limits_{i=1}^n X_i^2 - \ol X^2 - \sigma^2\bigg) =
-        \frac{\sum\limits_{i=1}^n X_i^2 - n\sigma^2}{\sqrt n} - \sqrt{n}\ol X^2
+        \frac{\sum\limits_{i=1}^n X_i^2 - n\sigma^2}{\sqrt n} - \sqrt{n}\cdot\ol X^2
         $$
         Первое слагаемое по центральной предельной теореме Леви стремится к нормальному
-        закону, а второе — к нулю.
+        закону, а второе стремится к нулю по вероятности:
         $$
-        P(\sqrt n \ol X^2 > \varepsilon) \leqslant
+        P(\sqrt n \cdot \ol X^2 > \varepsilon) \leqslant
         \frac{n^{\frac{3}{2}}\sigma^2}{n^2\varepsilon} \underto{n \to \infty} 0
         $$
+        Осталось только воспользоваться леммой.
     \end{enumerate}
-\end{proof}
-\begin{lemma}
-    Пусть $\Delta_n = \xi_n + \eta_n$, $\xi_n \overto{\mathrm d} \xi$,
-    $\eta_n \overto{\mathrm P} 0$. Тогда $\Delta_n \overto{\mathrm d} \xi$.
-\end{lemma}
-\begin{proof}
-    $$
-    |f_{\Delta_n}(t) - f_\xi(t)| = |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi} \pm Ee^{it\xi^n}|
-    \leqslant |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi_n}| +
-    \underbrace{|Ee^{it\xi_n} - Ee^{it\xi}|}_{\to 0}
-    $$
-    $$
-    |Ee^{it(\xi_n + \eta_n)} - Ee^{it\xi_n}| = |Ee^{it\xi_n}(e^{it\eta_n} - 1)| \leqslant
-    E|e^{it\eta_n} \ldots
-    $$
 \end{proof}
 
 Предположим, что у нас есть выборка $X_1, \ldots, X_n$ с генеральной функцией распределения
@@ -2731,14 +2744,15 @@ $F(x, \theta)$, где $\theta$ — какой-то параметр, котор
 \begin{definition}
     Пусть $g_n$, $h_n$ — статистики, причём $P(g_n < h_n) = 1$. Пусть $0 < \alpha \ll 1$.
     Если $P(g_n < \theta < h_n) \geqslant 1 - \alpha$, то $(g_n, h_n)$ называется
-    доверительным интервалом для параметра $\theta$ с доверительной вероятностью $\theta$.
+    доверительным интервалом для параметра $\theta$ с доверительной вероятностью $\alpha$.
 \end{definition}
 
 Геометрический смысл доверительного интервала заключается в том, что мы покрываем с заданной
 вероятностью $\alpha$ точку $\theta$ этим интервалом.
 
-Пусть $\xi_0, \xi_1, \ldots, \xi_n$ — независимые одинаково распределённые случайные 
-величины, причём $\xi_i \in N(0, 1)$ для всех $i$.
+Пусть $\xi_0, \xi_1, \ldots, \xi_n$ — независимые одинаково распределённые по
+стандартному нормальному закону случайные 
+величины.
 Пусть $\chi_n^2 = \sum\limits_{i=1}^n \xi_i^2$. Такую случайную величину называют 
 \emph{распределённой по закону хи-квадрат с $n$ степенями свободы}.
 
@@ -2754,7 +2768,7 @@ $F(x, \theta)$, где $\theta$ — какой-то параметр, котор
         \item $\ol X$, $s^2$ — независимые случайные величины.
         \item $\frac{ns^2}{\sigma^2}$ распределена по закону хи-квадрат с $n-1$ степенями 
         свободы.
-        \item $\sqrt{n - 1}\frac{\ol X - a}{\sigma}$ имеет распределение Стьюдента с
+        \item $\sqrt{n - 1}\frac{\ol X - a}{s}$ имеет распределение Стьюдента с
         $n - 1$ степенями свободы
     \end{enumerate}
 \end{lemma}
@@ -2766,7 +2780,7 @@ $F(x, \theta)$, где $\theta$ — какой-то параметр, котор
         Воспользуемся первым утверждением вышеприведённой леммы. Возьмём число
         $\alpha$: $0 < \alpha \ll 1$. С помощью таблиц стандартного нормального закона
         возьмём $z_{1 - \frac{\alpha}{2}}$ такое, что функция распределения
-        $\Phi(z_{1 - \frac{\alpha}{2}} = 1 - \frac{\alpha}{2}$.
+        $\Phi\big(z_{1 - \frac{\alpha}{2}}\big) = 1 - \frac{\alpha}{2}$.
         $$
         P\bigg(-z_{1 - \frac{\alpha}{2}} < \sqrt{n}\frac{\ol X - a}{\sigma} <
         z_{1 - \frac{\alpha}{2}}\bigg) = 1 - \alpha
@@ -2805,7 +2819,7 @@ $F(x, \theta)$, где $\theta$ — какой-то параметр, котор
 \paragraph{Метод моментов}
     Обозначим через $a_i = \frac{1}{n}\sum\limits_{k=1}^n x_k^i$
     $i$-й выборочный момент, через $\alpha_i(\theta) = E_\theta X_1^i$.
-    Составим систему и решим её:
+    Метод моментов заключается в решении следующей системы:
     $$
     \begin{cases}
         \alpha_1(\theta) = a_1 \\
