@@ -3008,7 +3008,7 @@ $$
 $$
 
 \begin{theorem}
-    Если $H_0$ верна, то $P(\chi_n^2 < x) \underto{n \to \infty} K_{(r-1)(s-1)}(x)$ю
+    Если $H_0$ верна, то $P(\chi_n^2 < x) \underto{n \to \infty} K_{(r-1)(s-1)}(x)$.
 \end{theorem}
 
 Пусть имеется случайная выборка $X_1, \ldots, X_n$ и вариационный ряд $X_{(1)}, \ldots, X_{(n)}$.
@@ -3019,7 +3019,7 @@ $$
 
 \paragraph{Критерий Вилкоксона для проверки однородности}
 
-$X_1, \ldots, X_n \sim F$, $Y_1, \ldots, Y_n \sim G$. Будем проверять гипотезы
+$X_1, \ldots, X_n \sim F$, $Y_1, \ldots, Y_m \sim G$. Будем проверять гипотезы
 $H_0 = \{F = G\}$, $H_1 = \{F \neq G\}$. Объединим выборки $X_i$ и $Y_j$ и построим ранги $R_i$
 только для $X_i$. Возьмём $w_{n, m} = \sum\limits_{i=1}^n R_i$.
 
@@ -3035,8 +3035,10 @@ $H_0 = \{F = G\}$, $H_1 = \{F \neq G\}$. Объединим выборки $X_i$
 
 Алгоритм:
 \begin{enumerate}
-    \item По $\alpha$ находим $z_{1-\frac{z}{2}}$ такое, что $\Phi(z_{1-\frac{z}{2}}) 
-    \frac{\alpha}{2}$ $\ldots$ %пропущено%
+    \item По $\alpha$ находим $z_{1-\frac{z}{2}}$ такое, что $\Phi(z_{1-\frac{\alpha}{2}}) =
+    1-\frac{\alpha}{2}$.
+    \item Если $\frac{w_{n,m} - Ew_{n,m}}{\sqrt{Dw_{n,m}}} \geqslant z_{1-\frac{\alpha}{2}}$, то
+    отвергаем $H_0$. Иначе — оставляем.
 \end{enumerate}
 
 \paragraph{Критерий Спирмена для проверки независимости}
@@ -3055,6 +3057,12 @@ $r_n$ называется \emph{коэффициентом корреляции
     Если $H_0$ верна, то $P(\sqrt{n-1} r_n < x) \underto{n \to \infty} \Phi(x)$;
 \end{theorem}
 
-Если $|\sqrt{n-1}r_n| \geqslant z_{1-\frac{\alpha}{2}}$, то отвергаем $H_0$.
+Алгоритм:
+\begin{enumerate}
+    \item По $\alpha$ находим $z_{1-\frac{z}{2}}$ такое, что $\Phi(z_{1-\frac{\alpha}{2}}) =
+    1-\frac{\alpha}{2}$.
+    \item Если $|\sqrt{n-1}r_n| \geqslant z_{1-\frac{\alpha}{2}}$, то отвергаем $H_0$. Иначе — 
+    оставляем.
+\end{enumerate}
 
 \end{document}
